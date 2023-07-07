@@ -1,8 +1,15 @@
-using System;
+using service.Interfaces;
+using repositorio.Interfaces;
 
-public class SinistroService
+
+namespace
 {
-    public SinistroService()
+    public class SinistroService
     {
+        private readonly ISinistroRepositorio sinistroRepositorio;
+        public SinistroService(ISinistroRepositorio sinistroRepositorio)
+        {
+            this.sinistroRepositorio = sinistroRepositorio;
+        }
     }
 }
