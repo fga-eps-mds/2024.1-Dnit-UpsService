@@ -24,28 +24,6 @@ namespace service
             return sinistros;
         }
 
-        public Sinistro CalcularUpsSinistro(Sinistro sinistro)
-        {
-            if (sinistro.Mortos > 0)
-            {
-                sinistro.Ups = 13;
-                return sinistro;
-            }
-            else if (sinistro.Tipo == "Atropelamento" && sinistro.Feridos > 0)
-            {
-                sinistro.Ups = 6;
-                return sinistro;
-            }
-            else if ( sinistro.Feridos > 0)
-            {
-                sinistro.Ups = 4;
-                return sinistro;
-            } else
-            {
-                sinistro.Ups = 1;
-                return sinistro;
-            }
-        }
 
         public void CalcularUpsEmMassa()
         {
@@ -53,9 +31,9 @@ namespace service
 
             foreach(Sinistro sinistro in sinistros)
             {
-                Sinistro sinistroComUpsCalculado = CalcularUpsSinistro(sinistro);
+                sinistro.CalcularUps();
 
-                upsRepositorio.AtualizarUpsSinistro(sinistroComUpsCalculado);
+                upsRepositorio.AtualizarUpsSinistro(sinistro);
             }
         }
 

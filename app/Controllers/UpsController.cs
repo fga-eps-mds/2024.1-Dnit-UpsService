@@ -35,8 +35,8 @@ namespace app.Controllers
         [HttpGet("escola/ups")]
         public IActionResult CalcularUpsEscola([FromQuery] Escola escola)
         {
-            int ups = upsService.CalcularUpsEscola(escola);
-            return new OkObjectResult(ups);
+            UpsDetalhado upsDetalhado = upsService.CalcularUpsEscola(escola);
+            return new OkObjectResult(upsDetalhado);
         }
     }
 }

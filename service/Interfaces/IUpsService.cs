@@ -6,9 +6,8 @@ namespace service.Interfaces
     public interface IUpsService
     {
         public IEnumerable<Sinistro> ObterSinistros();
-        public Sinistro CalcularUpsSinistro(Sinistro sinistro);
         public void CalcularUpsEmMassa();
         public UpsDetalhado CalcularUpsEscola(Escola escola);
-        public double CalcularDistancia(double lat1, double lon1, double lat2, double lon2);
+        public double CalcularDistancia(double lat1, double long1, double lat2, double long2);
     }
 }
