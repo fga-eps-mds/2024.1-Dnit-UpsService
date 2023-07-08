@@ -5,6 +5,7 @@ using Microsoft.VisualBasic.FileIO;
 using System.IO;
 using AutoMapper;
 using dominio;
+using System;
 
 namespace service
 {
@@ -39,7 +40,7 @@ namespace service
                 using (var parser = new TextFieldParser(reader))
                 {
                     parser.TextFieldType = FieldType.Delimited;
-                    parser.SetDelimiters(";");
+                    parser.SetDelimiters(",");
 
                     bool primeiralinha = false;
 
@@ -57,10 +58,10 @@ namespace service
                         sinistro.SiglaUF = linha[1];
                         sinistro.Rodovia = int.Parse(linha[2]);
                         sinistro.Km = double.Parse(linha[3]);
-                        sinistro.Snv = int.Parse(linha[4]);
+                        sinistro.Snv = linha[4];
                         sinistro.Sentido = linha[5];
                         sinistro.Solo = linha[6];
-                        sinistro.Data = linha[7];
+                        sinistro.Data = DateTime.Parse(linha[7]);
                         sinistro.Tipo = linha[8];
                         sinistro.Causa = linha[9];
                         sinistro.Gravidade = linha[10];
