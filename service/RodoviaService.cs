@@ -1,65 +1,86 @@
-﻿using dominio;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using service;
+﻿using System.IO;
+using dominio;
+using repositorio.Interfaces;
 using service.Interfaces;
-using System;
-using System.IO;
+using Microsoft.VisualBasic.FileIO;
 
-namespace app.Controllers
+
+
+namespace service
 {
-    [ApiController]
-    [Route("api/rodovia")]
-    public class RodoviaController : ControllerBase
+    public class RodoviaService : IRodoviaService
     {
-        private readonly IRodoviaService rodoviaService;
-
-        public RodoviaController(IRodoviaService rodoviaService)
+        private readonly IRodoviaRepositorio rodoviaRepositorio;
+        public RodoviaService(IRodoviaRepositorio rodoviaRepositorio)
         {
-            this.rodoviaService = rodoviaService;
+            this.rodoviaRepositorio = rodoviaRepositorio;
         }
 
-        [Consumes("multipart/form-data")]
-        [HttpPost("cadastrarRodoviaPlanilha")]
-        public async Task<IActionResult> EnviarPlanilha(IFormFile arquivo)
+        public bool SuperaTamanhoMaximo(MemoryStream planilha)
         {
-            // List<int> rodoviasDuplicadas;
-
-            try
+            using (var reader = new StreamReader(planilha))
             {
-                if (arquivo == null || arquivo.Length == 0)
-                    return BadRequest("Nenhum arquivo enviado.");
+                int tamanho_max = 5000;
+                int quantidade_rodovias = -1;
 
-                if (arquivo.ContentType.ToLower() != "text/csv")
+                while (reader.ReadLine() != null) { quantidade_rodovias++; }
+
+                return quantidade_rodovias > tamanho_max;
+            }
+        }
+        public void CadastrarRodoviaViaPlanilha(MemoryStream planilha)
+        {
+
+            int numero_linha = 2;
+
+            using (var reader = new StreamReader(planilha))
+            {
+                using (var parser = new TextFieldParser(reader))
                 {
-                    return BadRequest("O arquivo deve estar no formato CSV.");
-                }
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters(",");
 
-                using (var memoryStream = new MemoryStream())
-                {
-                    await arquivo.CopyToAsync(memoryStream);
-                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    bool primeiralinha = false;
 
-                    if (rodoviaService.SuperaTamanhoMaximo(memoryStream))
+                    while (!parser.EndOfData)
                     {
-                        return StatusCode(406, "Tamanho máximo de arquivo ultrapassado!");
+                        string[] linha = parser.ReadFields();
+                        if (!primeiralinha)
+                        {
+                            primeiralinha = true;
+                            continue;
+                        }
+
+                        RodoviaDTO rodovia = new RodoviaDTO();
+                        rodovia.AnoApuracao = int.Parse(linha[0]);
+                        rodovia.SiglaUF = linha[1];
+                        rodovia.NumeroRodovia = int.Parse(linha[2]);
+                        rodovia.TipoTrecho = linha[3];
+                        rodovia.CodigoSNV = linha[4];
+                        rodovia.LocalInicioFim = linha[5];
+                        rodovia.KmInicial = double.Parse(linha[6]);
+                        rodovia.KmFinal = double.Parse(linha[7]);
+                        rodovia.Extensao = double.Parse(linha[8]);
+                        rodovia.Superficie = linha[9];
+                        rodovia.FederalCoincidente = linha[10];
+                        rodovia.EstadualCoincidente = linha[11];
+                        rodovia.SuperficieEstadual = linha[12];
+                        rodovia.MP082 = (linha[13] != "Não");
+                        rodovia.ConcessaoConvenio = linha[14];
+
+                        rodoviaRepositorio.CadastrarRodovia(rodovia);
+                        numero_linha++;
                     }
                 }
-
-                using (var memoryStream = new MemoryStream())
-                {
-                    await arquivo.CopyToAsync(memoryStream);
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    rodoviaService.CadastrarRodoviaViaPlanilha(memoryStream);
-                }
-
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+
+
+
 
     }
 }
+
+
+

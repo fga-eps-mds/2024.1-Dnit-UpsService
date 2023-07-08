@@ -7,6 +7,6 @@ namespace service.Interfaces
     public interface IRodoviaService
     {
         public bool SuperaTamanhoMaximo(MemoryStream planilha);
-        public List<int> CadastrarRodoviaViaPlanilha(MemoryStream planilha);
+        public void CadastrarRodoviaViaPlanilha(MemoryStream planilha);
     }
 }
