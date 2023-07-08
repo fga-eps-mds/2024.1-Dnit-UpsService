@@ -16,7 +16,7 @@ namespace app.Controllers
             this.upsService = upsService;
         }
 
-        [HttpGet("sinistros")]
+        [HttpGet("obter/sinistros")]
         public IActionResult ObterUps()
         {
             IEnumerable<Sinistro> sinistros = upsService.ObterSinistros();
@@ -24,7 +24,7 @@ namespace app.Controllers
             return new OkObjectResult(sinistros);
         }
 
-        [HttpPost("sinistros/ups")]
+        [HttpPost("calcular/ups/sinistros")]
         public IActionResult CalcularUpsSinistros()
         {
             upsService.CalcularUpsEmMassa();
@@ -32,7 +32,7 @@ namespace app.Controllers
             return Ok();
         }
 
-        [HttpGet("escola/ups")]
+        [HttpGet("calcular/ups/escola")]
         public IActionResult CalcularUpsEscola([FromQuery] Escola escola)
         {
             UpsDetalhado upsDetalhado = upsService.CalcularUpsEscola(escola);
