@@ -28,10 +28,6 @@ namespace app.Controllers
                 if (arquivo == null || arquivo.Length == 0)
                     return BadRequest("Nenhum arquivo enviado.");
 
-/*                if (arquivo.ContentType.ToLower() != "text/csv" || arquivo.ContentType.ToLower() != "application/vnd.ms-excel")
-                {
-                    return BadRequest("O arquivo deve estar no formato CSV.");
-                }*/
 
                 using (var memoryStream = new MemoryStream())
                 {
