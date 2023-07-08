@@ -53,6 +53,16 @@ namespace repositorio
             contexto?.Conexao.Execute(sqlInserirSinistro, parametrosSinistro);
         }
 
+        public bool SinistroJaExiste(int codigoSinistro)
+        {
+            var sqlConsultaSinistro = "SELECT COUNT(*) FROM escola WHERE id = @Id_sinistro";
+            var parametros = new { CodigoSinistro = codigoSinistro };
+
+            var quantidade = contexto?.Conexao.ExecuteScalar<int>(sqlConsultaSinistro, parametros);
+
+            return quantidade > 0;
+        }
+
     }
 }
 
