@@ -22,7 +22,7 @@ namespace repositorio
                                       local_inicio_fim, km_inicial, km_final, extensao, superficie, federal_coincidente, estadual_coincidente,
                                       superficie_estadual, mp082, concessao_convenio)
                                       VALUES( @AnoApuracao, @SiglaUF, @NumeroRodovia, @TipoTrecho, @CodigoSNV, @LocalInicioFim, @KmInicial, @KmFinal,
-                                      @Extensao, @Superficie, @FederalCoincidente, @EstadualCoincidente, @SuperficeEstadual, @MP082, @ConcessaoConvenio)";
+                                      @Extensao, @Superficie, @FederalCoincidente, @EstadualCoincidente, @SuperficieEstadual, @MP082, @ConcessaoConvenio)";
             var parametrosRodovia = new
             {
                 AnoApuracao = rodoviaDTO.AnoApuracao,

@@ -20,7 +20,7 @@ namespace service
         {
             using (var reader = new StreamReader(planilha))
             {
-                int tamanho_max = 5000;
+                int tamanho_max = 10000;
                 int quantidade_rodovias = -1;
 
                 while (reader.ReadLine() != null) { quantidade_rodovias++; }
