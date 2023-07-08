@@ -8,6 +8,7 @@ namespace app.DI
         public static void AddConfigRepositorios(this IServiceCollection services)
         {
             services.AddScoped<IUpsRepositorio, UpsRepositorio>();
+            services.AddScoped<ISinistroRepositorio, SinistroRepositorio>();
         }
     }
 }

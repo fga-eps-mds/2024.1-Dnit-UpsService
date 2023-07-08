@@ -29,9 +29,8 @@ namespace service
             }
         }
 
-        public List<int> CadastrarSinistroViaPlanilha(MemoryStream planilha)
+        public void CadastrarSinistroViaPlanilha(MemoryStream planilha)
         {
-            List<int> sinistrosDuplicados = new List<int>();
 
             int numero_linha = 2;
 
@@ -54,27 +53,19 @@ namespace service
                         }
 
                         Sinistro sinistro = new Sinistro();
-                        sinistro.SiglaUF = linha[0];
-                        sinistro.Rodovia = int.Parse(linha[1]);
-
-                        if (sinistroRepositorio.SinistroJaExiste(sinistro.IdSinistro))
-                        {
-                            sinistrosDuplicados.Add(numero_linha);
-                            numero_linha++;
-                            continue;
-                        }
-
-                        sinistro.Km = double.Parse(linha[2]);
-                        sinistro.Sentido = linha[3];
-                        sinistro.Solo = linha[4];
-                        sinistro.Data = linha[5];
-                        sinistro.Tipo = linha[6];
-                        sinistro.Causa = linha[7];
-                        sinistro.Gravidade = linha[8];
-                        sinistro.Feridos = int.Parse(linha[9]);
-                        sinistro.Mortos = int.Parse(linha[10]);
-                        sinistro.Snv = int.Parse(linha[11]);
-                        sinistro.IdSinistro = int.Parse(linha[12]);
+                        sinistro.IdSinistro = int.Parse(linha[0]);
+                        sinistro.SiglaUF = linha[1];
+                        sinistro.Rodovia = int.Parse(linha[2]);
+                        sinistro.Km = double.Parse(linha[3]);
+                        sinistro.Snv = int.Parse(linha[4]);
+                        sinistro.Sentido = linha[5];
+                        sinistro.Solo = linha[6];
+                        sinistro.Data = linha[7];
+                        sinistro.Tipo = linha[8];
+                        sinistro.Causa = linha[9];
+                        sinistro.Gravidade = linha[10];
+                        sinistro.Feridos = int.Parse(linha[11]);
+                        sinistro.Mortos = int.Parse(linha[12]);
                         sinistro.Latitude = double.Parse(linha[13]);
                         sinistro.Longitude = double.Parse(linha[14]);
 
@@ -83,7 +74,6 @@ namespace service
                     }
                 }
             }
-            return sinistrosDuplicados;
         }
     }
 }

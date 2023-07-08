@@ -3,11 +3,6 @@ using repositorio.Interfaces;
 using repositorio.Contexto;
 using static repositorio.Contexto.ResolverContexto;
 using Dapper;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
-using System;
-using System.Linq;
 using dominio;
 
 namespace repositorio
@@ -23,18 +18,20 @@ namespace repositorio
 
         public void CadastrarSinistro(Sinistro sinistro)
         {
-            var sqlInserirSinistro = @"INSERT INTO public.sinistro(uf, rodovia, quilometro, sentido, solo, data, tipo, causa,
-            gravidade, feridos, mortos, snv, id, latitude, longitude)
-            VALUES(@Sigla_uf, @Rodovia, @Km, @Sentido, 
+            var sqlInserirSinistro = @"INSERT INTO public.sinistro(id, uf, rodovia, quilometro, snv, sentido, solo, data, tipo, causa,
+            gravidade, feridos, mortos, latitude, longitude)
+            VALUES(@IdSinistro, @SiglaUF, @Rodovia, @Km,@Snv, @Sentido, 
             @Solo, @Data, @Tipo, @Causa, @Gravidade, 
-            @Feridos, @Mortos, @Snv, @Id_sinistro,   
+            @Feridos, @Mortos,   
             @Latitude, @Longitude)";
 
             var parametrosSinistro = new
             {
-                Sigla_uf = sinistro.SiglaUF,
+                IdSinistro = sinistro.IdSinistro,
+                SiglaUF = sinistro.SiglaUF,
                 Rodovia = sinistro.Rodovia,
                 Km = sinistro.Km,
+                Snv = sinistro.Snv,
                 Sentido = sinistro.Sentido,
                 Solo = sinistro.Solo,
                 Data = sinistro.Data,
@@ -43,8 +40,6 @@ namespace repositorio
                 Gravidade = sinistro.Gravidade,
                 Feridos = sinistro.Feridos,
                 Mortos = sinistro.Mortos,
-                Snv = sinistro.Snv,
-                Id_sinistro = sinistro.IdSinistro,
                 Latitude = sinistro.Latitude,
                 Longitude = sinistro.Longitude,
                 
@@ -52,17 +47,6 @@ namespace repositorio
 
             contexto?.Conexao.Execute(sqlInserirSinistro, parametrosSinistro);
         }
-
-        public bool SinistroJaExiste(int codigoSinistro)
-        {
-            var sqlConsultaSinistro = "SELECT COUNT(*) FROM escola WHERE id = @Id_sinistro";
-            var parametros = new { CodigoSinistro = codigoSinistro };
-
-            var quantidade = contexto?.Conexao.ExecuteScalar<int>(sqlConsultaSinistro, parametros);
-
-            return quantidade > 0;
-        }
-
     }
 }
 

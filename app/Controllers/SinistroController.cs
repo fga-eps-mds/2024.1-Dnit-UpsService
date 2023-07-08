@@ -1,10 +1,16 @@
+using dominio;
+using Microsoft.AspNetCore.Http;
+using service;
 using Microsoft.AspNetCore.Mvc;
 using service.Interfaces;
+using System;
+using System.IO;
+
 
 namespace app.Controllers
 {
     [ApiController]
-    [Route("api/controller")]
+    [Route("api/sinistro")]
 
     public class SinistroController : ControllerBase
     {
@@ -16,12 +22,11 @@ namespace app.Controllers
             this.sinistroService = sinistroService;
         }
 
+        [Consumes("multipart/form-data")]
         [HttpPost("cadastrarSinistroPlanilha")]
 
         public async Task<IActionResult> EnviarPlanilha(IFormFile arquivo)
         {
-
-            List<int> sinistrosDuplicados;
 
             try
             {
@@ -48,10 +53,10 @@ namespace app.Controllers
                 {
                     await arquivo.CopyToAsync(memoryStream);
                     memoryStream.Seek(0, SeekOrigin.Begin);
-                    sinistrosDuplicados = sinistroService.CadastrarSinistroViaPlanilha(memoryStream);
+                    sinistroService.CadastrarSinistroViaPlanilha(memoryStream);
                 }
 
-                return Ok(sinistrosDuplicados);
+                return Ok();
             }
             catch (Exception ex)
             {
