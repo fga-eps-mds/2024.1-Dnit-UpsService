@@ -59,22 +59,39 @@ namespace service
             }
         }
 
-        public int CalcularUpsEscola(Escola escola)
+        public UpsDetalhado CalcularUpsEscola(Escola escola)
         {
             IEnumerable<Sinistro> sinistros = ObterSinistros();
-            int ups = 0;
-            double raio = 2.0;
+            UpsDetalhado upsDetalhado = new();
+            
+            double raio = 2.0; //raio esta em quilometro
+
+            Dictionary<int, int> upsPorAno = new()
+            {
+                { 2022, 0 },
+                { 2021, 0 },
+                { 2020, 0 },
+                { 2019, 0 },
+                { 2018, 0 }
+            };
 
             foreach (Sinistro sinistro in sinistros)
             {
 
                 if (CalculateDistance(sinistro.Latitude, sinistro.Longitude, escola.Latitude, escola.Longitude) <= raio)
                 {
-                    ups = ups + (sinistro.Ups ?? 0);
+                    upsPorAno[sinistro.Data.Year] += sinistro.Ups ?? 0;
                 }
             }
 
-            return ups;
+            upsDetalhado.Ups2022 = upsPorAno[2022];
+            upsDetalhado.Ups2021 = upsPorAno[2021];
+            upsDetalhado.Ups2020 = upsPorAno[2020];
+            upsDetalhado.Ups2019 = upsPorAno[2019];
+            upsDetalhado.Ups2018 = upsPorAno[2018];
+            upsDetalhado.CalcularUpsGeral();
+
+            return upsDetalhado;
         }
 
 

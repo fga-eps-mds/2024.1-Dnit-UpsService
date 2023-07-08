@@ -10,5 +10,6 @@
         public double Longitude { get; set; }
         public int Mortos { get; set; }
         public int Feridos { get; set; }
+        public DateTime Data { get; set; }
     }
 }

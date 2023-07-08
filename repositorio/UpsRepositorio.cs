@@ -33,7 +33,7 @@ namespace repositorio
 
         public IEnumerable<Sinistro> ObterSinistros()
         {
-            var sql = @"SELECT id, tipo, gravidade, feridos, mortos, latitude, longitude, ups from public.sinistro";
+            var sql = @"SELECT id, tipo, gravidade, feridos, mortos, latitude, longitude, ups, data from public.sinistro where ups is null";
 
             var sinistros = contexto?.Conexao.Query<Sinistro>(sql);
 
