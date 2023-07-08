@@ -16,10 +16,48 @@ namespace app.Controllers
             this.sinistroService = sinistroService;
         }
 
-        [HttpPost("cadastroSinistro")]
-        public IActionResult CadastrarSinistro(IFormFile sinistros)
+        [HttpPost("cadastrarSinistroPlanilha")]
+
+        public async Task<IActionResult> EnviarPlanilha(IFormFile arquivo)
         {
 
+            List<int> sinistrosDuplicados;
+
+            try
+            {
+                if (arquivo == null || arquivo.Length == 0)
+                    return BadRequest("Nenhum arquivo enviado.");
+
+                if (arquivo.ContentType.ToLower() != "text/csv")
+                {
+                    return BadRequest("O arquivo deve estar no formato CSV.");
+                }
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await arquivo.CopyToAsync(memoryStream);
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+
+                    if (sinistroService.SuperaTamanhoMaximo(memoryStream))
+                    {
+                        return StatusCode(406, "Tamanho máximo de arquivo ultrapassado!");
+                    }
+                }
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await arquivo.CopyToAsync(memoryStream);
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    sinistrosDuplicados = sinistroService.CadastrarSinistroViaPlanilha(memoryStream);
+                }
+
+                return Ok(sinistrosDuplicados);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
+
     }
 }

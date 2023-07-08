@@ -7,7 +7,7 @@
         public double Km { get; set; }
         public string Sentido { get; set; }
         public string Solo { get; set; }
-        public DateTime Data { get; set; }
+        public string Data { get; set; }
         public string Tipo { get; set; }
         public string Causa { get; set; }
         public string Gravidade { get; set; }

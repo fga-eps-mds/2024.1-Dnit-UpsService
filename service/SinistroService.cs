@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using Microsoft.VisualBasic.FileIO;
 using System.IO;
 using AutoMapper;
+using dominio;
 
-namespace
+namespace service
 {
     public class SinistroService : ISinistroService
     {
@@ -82,7 +83,7 @@ namespace
                     }
                 }
             }
-            return sinistroDuplicados;
+            return sinistrosDuplicados;
         }
     }
 }
