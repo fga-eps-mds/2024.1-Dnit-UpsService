@@ -69,7 +69,7 @@ namespace service
                         sinistro.Mortos = int.Parse(linha[12]);
                         sinistro.Latitude = double.Parse(linha[13]);
                         sinistro.Longitude = double.Parse(linha[14]);
-
+                        sinistro.CalcularUps();
                         sinistroRepositorio.CadastrarSinistro(sinistro);
                         numero_linha++;
                     }

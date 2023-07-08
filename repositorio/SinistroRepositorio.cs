@@ -19,11 +19,11 @@ namespace repositorio
         public void CadastrarSinistro(Sinistro sinistro)
         {
             var sqlInserirSinistro = @"INSERT INTO public.sinistro(id, uf, rodovia, quilometro, snv, sentido, solo, data, tipo, causa,
-            gravidade, feridos, mortos, latitude, longitude)
+            gravidade, feridos, mortos, latitude, longitude, ups)
             VALUES(@IdSinistro, @SiglaUF, @Rodovia, @Km,@Snv, @Sentido, 
             @Solo, @Data, @Tipo, @Causa, @Gravidade, 
             @Feridos, @Mortos,   
-            @Latitude, @Longitude)";
+            @Latitude, @Longitude, @Ups)";
 
             var parametrosSinistro = new
             {
@@ -42,6 +42,7 @@ namespace repositorio
                 Mortos = sinistro.Mortos,
                 Latitude = sinistro.Latitude,
                 Longitude = sinistro.Longitude,
+                Ups = sinistro.Ups,
                 
             };
 
