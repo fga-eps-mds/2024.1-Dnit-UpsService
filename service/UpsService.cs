@@ -9,7 +9,7 @@ namespace service
     public class UpsService : IUpsService
     {
         private readonly IUpsRepositorio upsRepositorio;
-        private const double EarthRadiusKm = 6371.0;
+        private const double raioTerraEmKm = 6371.0;
 
 
         public UpsService(IUpsRepositorio upsRepositorio)
@@ -77,8 +77,7 @@ namespace service
 
             foreach (Sinistro sinistro in sinistros)
             {
-
-                if (CalculateDistance(sinistro.Latitude, sinistro.Longitude, escola.Latitude, escola.Longitude) <= raio)
+                if (CalcularDistancia(sinistro.Latitude, sinistro.Longitude, escola.Latitude, escola.Longitude) <= raio)
                 {
                     upsPorAno[sinistro.Data.Year] += sinistro.Ups ?? 0;
                 }
@@ -89,6 +88,7 @@ namespace service
             upsDetalhado.Ups2020 = upsPorAno[2020];
             upsDetalhado.Ups2019 = upsPorAno[2019];
             upsDetalhado.Ups2018 = upsPorAno[2018];
+
             upsDetalhado.CalcularUpsGeral();
 
             return upsDetalhado;
@@ -96,28 +96,24 @@ namespace service
 
 
 
-        public static double DegreesToRadians(double degrees)
+        public static double ConverterParaRadianos(double grau)
         {
-            return degrees * Math.PI / 180.0;
+            return grau * Math.PI / 180.0;
         }
 
-        public static decimal ConvertToRadians(decimal grau)
+        public double CalcularDistancia(double lat1, double long1, double lat2, double long2)
         {
-            return grau * (decimal)Math.PI / 180;
-        }
+            var diferencaLatitude = ConverterParaRadianos(lat2 - lat1);
+            var diferencaLongitude = ConverterParaRadianos(long2 - long1);
 
-        public double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
-        {
-            var dLat = DegreesToRadians(lat2 - lat1);
-            var dLon = DegreesToRadians(lon2 - lon1);
+            var primeiraParteFormula = Math.Sin(diferencaLatitude / 2) * Math.Sin(diferencaLatitude / 2) +
+                    Math.Cos(ConverterParaRadianos(lat1)) * Math.Cos(ConverterParaRadianos(lat2)) *
+                    Math.Sin(diferencaLongitude / 2) * Math.Sin(diferencaLongitude / 2);
 
-            var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
-                    Math.Cos(DegreesToRadians(lat1)) * Math.Cos(DegreesToRadians(lat2)) *
-                    Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+            var resultadoFormula = 2 * Math.Atan2(Math.Sqrt(primeiraParteFormula), Math.Sqrt(1 - primeiraParteFormula));
 
-            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var distance = raioTerraEmKm * resultadoFormula;
 
-            var distance = EarthRadiusKm * c;
             return distance;
         }
     }

@@ -9,6 +9,6 @@ namespace service.Interfaces
         public Sinistro CalcularUpsSinistro(Sinistro sinistro);
         public void CalcularUpsEmMassa();
         public UpsDetalhado CalcularUpsEscola(Escola escola);
-        public double CalculateDistance(double lat1, double lon1, double lat2, double lon2);
+        public double CalcularDistancia(double lat1, double lon1, double lat2, double lon2);
     }
 }
