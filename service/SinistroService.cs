@@ -81,6 +81,10 @@ namespace service
                         {
                             throw new Exception("Planilha com formato incompatível.");
                         }
+                        catch (Exception ex)
+                        {
+                            throw new Exception("Dados já inseridos");
+                        }
                     }
                 }
             }

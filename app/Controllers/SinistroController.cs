@@ -31,7 +31,7 @@ namespace app.Controllers
             try
             {
                 if (arquivo == null || arquivo.Length == 0)
-                    return BadRequest("Arquivo em branco.");
+                    return BadRequest("Nenhum arquivo enviado");
 
                 if (arquivo.ContentType.ToLower() != "text/csv")
                 {
