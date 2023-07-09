@@ -18,12 +18,12 @@ namespace repositorio
 
         public void AtualizarUpsSinistro(Sinistro sinistro)
         {
-            var sql = @"UPDATE public.sinistro SET ups = @Ups WHERE id = @IdSinistro AND latitude = @Latitude AND longitude = @Longitude";
+            var sql = @"UPDATE public.sinistro SET ups = @Ups WHERE id = @Id AND latitude = @Latitude AND longitude = @Longitude";
 
             var parametros = new
             {
                 Ups = sinistro.Ups,
-                Id = sinistro.IdSinistro,
+                Id = sinistro.Id,
                 Latitude = sinistro.Latitude,
                 Longitude = sinistro.Longitude
             };
