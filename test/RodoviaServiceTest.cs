@@ -40,4 +40,19 @@ namespace test.RodoviaServiceTests
 
     }
 
+    [Fact]
+    public void SuperaTamanhoMaximo_QuandoPlanilhaComTamanhoMaiorQueOMaximoForPassada_DeveRetornarTrue()
+    {
+        Mock<IRodoviaRepositorio> mockRodoviaRepositorio = new();
+        IRodoviaService rodoviaService = new RodoviaService(mockRodoviaRepositorio.Object);
+
+        string caminhoArquivo = ;
+
+        MemoryStream memoryStream = new MemoryStream(File.ReadAllBytes(caminhoArquivo));
+
+        bool resultado = rodoviaService.SuperaTamanhoMaximo(memoryStream);
+
+        Assert.True(resultado);
+    }
+
 }
