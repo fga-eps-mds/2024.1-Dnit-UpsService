@@ -1,10 +1,7 @@
 using Moq;
 using service;
-using repositorio;
-using service.Interfaces;
 using repositorio.Interfaces;
 using dominio;
-using test.Stub;
 
 namespace test.RodoviaServiceTests
 {
@@ -12,47 +9,46 @@ namespace test.RodoviaServiceTests
     {
         private readonly RodoviaService rodoviaService;
         private readonly Mock<IRodoviaRepositorio> mockRodoviaRepositorio;
+        private readonly string caminhoDoArquivo;
         public RodoviaServiceTest()
         {
+            caminhoDoArquivo = "..\\..\\..\\..\\test\\Stub\\planilhaExemplo.csv";
             mockRodoviaRepositorio = new();
             rodoviaService = new RodoviaService(mockRodoviaRepositorio.Object);
         }
         [Fact]
         public void CadastrarRodoviaViaPlanilha_QuandoPlanilhaForPassadaENaoTiverDado_NaoDevePassarPeloRepositorio()
         {
-            var memoryStream = new MemoryStream();
+            Assert.Throws<ArgumentNullException>(() => rodoviaService.CadastrarRodoviaViaPlanilha(null));
+        }
+        [Fact]
+        public void CadastrarRodoviaViaPlanilha_QuandoForChamado_DeveChamarORepositorio()
+        {;
+            var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
 
             rodoviaService.CadastrarRodoviaViaPlanilha(memoryStream);
-            mockRodoviaRepositorio.Verify(mock => mock.CadastrarRodovia(It.IsAny<RodoviaDTO>()), Times.Never);
+            mockRodoviaRepositorio.Verify(mock => mock.CadastrarRodovia(It.IsAny<RodoviaDTO>()), Times.Exactly(3));
         }
         [Fact]
-        public void CadastrarRodoviaViaPlanilha_QuandoForChamado_DeveChamarORepositorioUmaVez()
+        public void CadastrarRodoviaViaPlanilha_QuandForChamado_DeveCadastrarRodovias()
         {
-            var memoryStream = new MemoryStream();
-        
+            var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
+
+            rodoviaService.CadastrarRodoviaViaPlanilha(memoryStream);
+            mockRodoviaRepositorio.Verify(mock => mock.CadastrarRodovia(It.IsAny<RodoviaDTO>()), Times.Exactly(3));
         }
+
         [Fact]
-        public void CadastrarRodoviaViaPlanilha_QuandoCadastroFalhar_DeveChamarORepositorioUmaVez()
+        public void SuperaTamanhoMaximo_QuandoPlanilhaComTamanhoMaiorQueOMaximoForPassada_DeveRetornarTrue()
         {
-            var memoryStream = new MemoryStream();
-            
-        }
-
-    }
-
-    [Fact]
-    public void SuperaTamanhoMaximo_QuandoPlanilhaComTamanhoMaiorQueOMaximoForPassada_DeveRetornarTrue()
-    {
-        Mock<IRodoviaRepositorio> mockRodoviaRepositorio = new();
-        IRodoviaService rodoviaService = new RodoviaService(mockRodoviaRepositorio.Object);
-
-        string caminhoArquivo = ;
+            string caminhoArquivo = "..\\..\\..\\..\\test\\Stub\\planilha_tamanho_max.csv";
 
         MemoryStream memoryStream = new MemoryStream(File.ReadAllBytes(caminhoArquivo));
 
-        bool resultado = rodoviaService.SuperaTamanhoMaximo(memoryStream);
+            bool resultado = rodoviaService.SuperaTamanhoMaximo(memoryStream);
 
-        Assert.True(resultado);
+            Assert.True(resultado);
+        }
     }
 
 }
