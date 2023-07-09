@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using dominio;
+using System;
+
 namespace test.Stub
 {
     public class SinistroStub
     {
         public Sinistro Ups1()
-        public SinistroDTO ObterSinistroDTO()
         {
             return new Sinistro
-            return new SinistroDTO
             {
                 Id = 146359,
                 Gravidade = "Sem vítima",
@@ -68,23 +69,30 @@ namespace test.Stub
                 Mortos = 1,
                 Feridos = 0,
                 Data = DateTime.Now
-                IdSinistro = 5000000
-                SiglaUF = "DF"
-                Rodovia = 123
-                Km = 123
-                Snv = 316BPI0550
-                Sentido = "Decrescente"
-                Solo = "Urbano"
-                Data = 01/01/2050 01:35:00
-                Tipo = "Tombamento"
-                Causa = "Ingestão de álcool"
-                Gravidade = "Com morto"
-                Feridos = 100
-                Mortos = 100
-                Ups = 13
-                Latitude = "-21,228445"
-                Longitude = "-44,1347544"
+            };
+        }
+        public Sinistro ObterSinistroDTO()
+        {
+            return new Sinistro
+            {
+                Id = 5000000,
+                SiglaUF = "DF",
+                Rodovia = 123,
+                Km = 123,
+                Snv = "316BPI0550",
+                Sentido = "Decrescente",
+                Solo = "Urbano",
+                Data = DateTime.Now,
+                Tipo = "Tombamento",
+                Causa = "Ingestão de álcool",
+                Gravidade = "Com morto",
+                Feridos = 100,
+                Mortos = 100,
+                Ups = 13,
+                Latitude = 2.228445,
+                Longitude = 44.1347544
             };
         }
     }
 }
+

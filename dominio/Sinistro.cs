@@ -2,7 +2,7 @@
 {
     public class Sinistro
     {
-        public int IdSinistro { get; set; }
+        public int Id { get; set; }
         public string? SiglaUF { get; set; }
         public int Rodovia { get; set; }
         public double Km { get; set; }

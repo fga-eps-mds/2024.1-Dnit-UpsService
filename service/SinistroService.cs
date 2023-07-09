@@ -57,7 +57,7 @@ namespace service
                             }
 
                             Sinistro sinistro = new Sinistro();
-                            sinistro.IdSinistro = int.Parse(linha[0]);
+                            sinistro.Id = int.Parse(linha[0]);
                             sinistro.SiglaUF = linha[1];
                             sinistro.Rodovia = int.Parse(linha[2]);
                             sinistro.Km = double.Parse(linha[3]);
