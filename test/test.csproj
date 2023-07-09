@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\dominio\dominio.csproj" />
     <ProjectReference Include="..\service\service.csproj" />
   </ItemGroup>
 

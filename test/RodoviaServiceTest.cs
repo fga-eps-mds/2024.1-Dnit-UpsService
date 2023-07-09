@@ -6,20 +6,38 @@ using repositorio.Interfaces;
 using dominio;
 using test.Stub;
 
-namespace test
+namespace test.RodoviaServiceTests
 {
     public class RodoviaServiceTest
     {
-        [Fact]
-        public void CadastrarRodoviaViaPlanilha_QuandoPlanilhaForPassada_DevePassarPeloRepositorio()
+        private readonly RodoviaService rodoviaService;
+        private readonly Mock<IRodoviaRepositorio> mockRodoviaRepositorio;
+        public RodoviaServiceTest()
         {
-            Mock<IRodoviaRepositorio> mockRodoviaRepositorio = new();
-            IRodoviaService rodoviaService = new RodoviaService(mockRodoviaRepositorio.Object);
+            mockRodoviaRepositorio = new();
+            rodoviaService = new RodoviaService(mockRodoviaRepositorio.Object);
+        }
+        [Fact]
+        public void CadastrarRodoviaViaPlanilha_QuandoPlanilhaForPassadaENaoTiverDado_NaoDevePassarPeloRepositorio()
+        {
             var memoryStream = new MemoryStream();
 
             rodoviaService.CadastrarRodoviaViaPlanilha(memoryStream);
             mockRodoviaRepositorio.Verify(mock => mock.CadastrarRodovia(It.IsAny<RodoviaDTO>()), Times.Never);
         }
+        [Fact]
+        public void CadastrarRodoviaViaPlanilha_QuandoForChamado_DeveChamarORepositorioUmaVez()
+        {
+            var memoryStream = new MemoryStream();
+        
+        }
+        [Fact]
+        public void CadastrarRodoviaViaPlanilha_QuandoCadastroFalhar_DeveChamarORepositorioUmaVez()
+        {
+            var memoryStream = new MemoryStream();
+            
+        }
+
     }
 
 }
