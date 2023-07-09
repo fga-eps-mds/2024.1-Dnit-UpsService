@@ -51,7 +51,7 @@ namespace app.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao importar planilha");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Arquivo incompatível");
             }
         }
 
