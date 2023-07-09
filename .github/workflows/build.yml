@@ -90,4 +90,4 @@ jobs:
           destination_folder: 'analytics-raw-data'
           user_email: ${{ secrets.GIT_EMAIL}}
           user_name: ${{ secrets.GIT_USER }}
-          commit_message: Métricas automáticas da release ${{github.ref_name}} - ${{ github.event.repository.name }}
+          commit_message: Mï¿½tricas automï¿½ticas da release ${{github.ref_name}} - ${{ github.event.repository.name }}
