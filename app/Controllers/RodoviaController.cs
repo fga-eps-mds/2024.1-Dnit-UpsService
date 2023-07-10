@@ -49,7 +49,7 @@ namespace app.Controllers
 
                 return Ok();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Arquivo incompatível");
             }
