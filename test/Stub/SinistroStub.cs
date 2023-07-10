@@ -1,5 +1,4 @@
-Ôªøusing dominio;
-using System;
+using dominio;
 
 namespace test.Stub
 {
@@ -10,8 +9,8 @@ namespace test.Stub
             return new Sinistro
             {
                 Id = 146359,
-                Gravidade = "Sem v√≠tima",
-                Tipo = "Colis√£o lateral",
+                Gravidade = "Sem vÌtima",
+                Tipo = "Colis„o lateral",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 0,
@@ -26,7 +25,7 @@ namespace test.Stub
             {
                 Id = 146409,
                 Gravidade = "Com ferido",
-                Tipo = "Colis√£o transversal",
+                Tipo = "Colis„o transversal",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 0,
@@ -64,5 +63,28 @@ namespace test.Stub
                 Data = DateTime.Now
             };
         }
+        public Sinistro ObterSinistroDTO()
+        {
+            return new Sinistro
+            {
+                Id = 5000000,
+                SiglaUF = "DF",
+                Rodovia = 123,
+                Km = 123,
+                Snv = "316BPI0550",
+                Sentido = "Decrescente",
+                Solo = "Urbano",
+                Data = DateTime.Now,
+                Tipo = "Tombamento",
+                Causa = "Ingest„o de ·lcool",
+                Gravidade = "Com morto",
+                Feridos = 100,
+                Mortos = 100,
+                Ups = 13,
+                Latitude = 2.228445,
+                Longitude = 44.1347544
+            };
+        }
     }
 }
+

@@ -9,6 +9,7 @@ namespace app.DI
         {
             services.AddScoped<IUpsRepositorio, UpsRepositorio>();
             services.AddScoped<IRodoviaRepositorio, RodoviaRepositorio>();
+            services.AddScoped<ISinistroRepositorio, SinistroRepositorio>();
         }
     }
 }
