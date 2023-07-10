@@ -15,7 +15,7 @@
         public string? Gravidade { get; set; }
         public int Feridos { get; set; }
         public int Mortos { get; set; }
-        public int Ups { get; set; }
+        public int? Ups { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
