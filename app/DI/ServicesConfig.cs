@@ -9,6 +9,7 @@ namespace app.DI
         {
             services.AddScoped<IUpsService, UpsService>();
             services.AddScoped<ISinistroService, SinistroService>();
+            services.AddScoped<IRodoviaService, RodoviaService>();
         }
     }
 }
