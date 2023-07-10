@@ -4,42 +4,43 @@ using repositorio;
 using service.Interfaces;
 using repositorio.Interfaces;
 using dominio;
-using test.Stub;
+
+using System.IO;
+
 
 namespace test.SinistroServiceTests
 {
     public class SinistroServiceTest
     {
-        private readonly SinistroService rodoviaService;
-        private readonly Mock<ISinistroRepositorio> mockRodoviaRepositorio;
+        private readonly SinistroService sinistroService;
+        private readonly Mock<ISinistroRepositorio> mockSinistroRepositorio;
         private readonly string caminhoDoArquivo;
         public SinistroServiceTest()
         {
-            caminhoDoArquivo = "..\\..\\..\\..\\test\\Stub\\planilhaExemplo.csv";
-            mockRodoviaRepositorio = new();
-            rodoviaService = new SinistroService(mockRodoviaRepositorio.Object);
+            caminhoDoArquivo = "..\\..\\..\\..\\test\\Stub\\ExemploSin.csv";
+            mockSinistroRepositorio = new();
+            sinistroService = new SinistroService(mockSinistroRepositorio.Object);
         }
         [Fact]
-        public void CadastrarRodoviaViaPlanilha_QuandoPlanilhaForPassadaENaoTiverDado_NaoDevePassarPeloRepositorio()
+        public void CadastrarSinistroViaPlanilha_QuandoPlanilhaForPassadaENaoTiverDado_NaoDevePassarPeloRepositorio()
         {
-            Assert.Throws<ArgumentNullException>(() => rodoviaService.CadastrarSinistroViaPlanilha(null));
+            Assert.Throws<ArgumentNullException>(() => sinistroService.CadastrarSinistroViaPlanilha(null));
         }
         [Fact]
-        public void CadastrarRodoviaViaPlanilha_QuandoForChamado_DeveChamarORepositorio()
-        {
-            ;
-            var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
-
-            rodoviaService.CadastrarSinistroViaPlanilha(memoryStream);
-            mockRodoviaRepositorio.Verify(mock => mock.CadastrarSinistro(It.IsAny<Sinistro>()), Times.Exactly(3));
-        }
-        [Fact]
-        public void CadastrarRodoviaViaPlanilha_QuandForChamado_DeveCadastrarRodovias()
+        public void CadastrarSinistroViaPlanilha_QuandoForChamado_DeveChamarORepositorio()
         {
             var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
 
-            rodoviaService.CadastrarSinistroViaPlanilha(memoryStream);
-            mockRodoviaRepositorio.Verify(mock => mock.CadastrarSinistro(It.IsAny<Sinistro>()), Times.Exactly(3));
+            sinistroService.CadastrarSinistroViaPlanilha(memoryStream);
+            mockSinistroRepositorio.Verify(mock => mock.CadastrarSinistro(It.IsAny<Sinistro>()), Times.Exactly(3));
+        }
+        [Fact]
+        public void CadastrarSinistroViaPlanilha_QuandForChamado_DeveCadastrarSinistros()
+        {
+            var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
+
+            sinistroService.CadastrarSinistroViaPlanilha(memoryStream);
+            mockSinistroRepositorio.Verify(mock => mock.CadastrarSinistro(It.IsAny<Sinistro>()), Times.Exactly(3));
         }
 
         [Fact]
