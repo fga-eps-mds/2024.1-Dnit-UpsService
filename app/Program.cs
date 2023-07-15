@@ -7,14 +7,19 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(7085);
+});
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.EnableAnnotations();
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "DNIT",
-        Description = "Backend DNIT"
+        Title = "UpsService",
+        Description = "Microserivo UpsService"
     });
 });
 

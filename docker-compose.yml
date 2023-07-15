@@ -1,0 +1,8 @@
+version: "3.0"
+services:
+  escola-service:
+    build:
+      context: .
+    ports:
+      - "7085:7085"
+    container_name: upsService
