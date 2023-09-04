@@ -1,12 +1,8 @@
 using Moq;
 using service;
-using repositorio;
 using service.Interfaces;
 using repositorio.Interfaces;
 using dominio;
-
-using System.IO;
-
 
 namespace test.SinistroServiceTests
 {
@@ -14,18 +10,22 @@ namespace test.SinistroServiceTests
     {
         private readonly SinistroService sinistroService;
         private readonly Mock<ISinistroRepositorio> mockSinistroRepositorio;
-        private readonly string caminhoDoArquivo;
+        private string caminhoDoArquivo;
+        private readonly string caminhoTests = Path.Join("..", "..", "..", "..", "test");
+
         public SinistroServiceTest()
         {
-            caminhoDoArquivo = "..\\..\\..\\..\\test\\Stub\\ExemploSin.csv";
+            caminhoDoArquivo = Path.Join(caminhoTests, "Stub", "ExemploSin.csv");
             mockSinistroRepositorio = new();
             sinistroService = new SinistroService(mockSinistroRepositorio.Object);
         }
+
         [Fact]
         public void CadastrarSinistroViaPlanilha_QuandoPlanilhaForPassadaENaoTiverDado_NaoDevePassarPeloRepositorio()
         {
             Assert.Throws<ArgumentNullException>(() => sinistroService.CadastrarSinistroViaPlanilha(null));
         }
+
         [Fact]
         public void CadastrarSinistroViaPlanilha_QuandoForChamado_DeveChamarORepositorio()
         {
@@ -34,6 +34,7 @@ namespace test.SinistroServiceTests
             sinistroService.CadastrarSinistroViaPlanilha(memoryStream);
             mockSinistroRepositorio.Verify(mock => mock.CadastrarSinistro(It.IsAny<Sinistro>()), Times.Exactly(3));
         }
+
         [Fact]
         public void CadastrarSinistroViaPlanilha_QuandForChamado_DeveCadastrarSinistros()
         {
@@ -49,9 +50,9 @@ namespace test.SinistroServiceTests
             Mock<ISinistroRepositorio> mockSinistroRepositorio = new();
             ISinistroService sinistroService = new SinistroService(mockSinistroRepositorio.Object);
 
-            string caminhoArquivo = "..\\..\\..\\..\\test\\Stub\\planilhaExemploSinistro.csv";
+            caminhoDoArquivo = Path.Join(caminhoTests, "Stub", "planilhaExemploSinistro.csv");
 
-            MemoryStream memoryStream = new MemoryStream(File.ReadAllBytes(caminhoArquivo));
+            MemoryStream memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
 
             bool resultado = sinistroService.SuperaTamanhoMaximo(memoryStream);
 
