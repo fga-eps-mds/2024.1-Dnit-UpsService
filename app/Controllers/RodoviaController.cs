@@ -1,7 +1,6 @@
 using dominio;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using service;
 using service.Interfaces;
 using System;
 using System.IO;
@@ -36,7 +35,7 @@ namespace app.Controllers
 
                     if (rodoviaService.SuperaTamanhoMaximo(memoryStream))
                     {
-                        return StatusCode(406, "Tamanho máximo de arquivo ultrapassado!");
+                        return StatusCode(406, "Tamanho mï¿½ximo de arquivo ultrapassado!");
                     }
                 }
 
@@ -51,7 +50,7 @@ namespace app.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Arquivo incompatível");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Arquivo incompatï¿½vel");
             }
         }
 
