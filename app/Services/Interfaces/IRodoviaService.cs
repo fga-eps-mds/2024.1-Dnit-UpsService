@@ -1,7 +1,3 @@
-using System.IO;
-using System.Collections.Generic;
-using dominio;
-
 namespace service.Interfaces
 {
     public interface IRodoviaService

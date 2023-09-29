@@ -1,11 +1,7 @@
 using service.Interfaces;
 using repositorio.Interfaces;
-using System.Collections.Generic;
 using Microsoft.VisualBasic.FileIO;
-using System.IO;
-using AutoMapper;
 using dominio;
-using System;
 
 namespace service
 {
@@ -79,11 +75,11 @@ namespace service
                         }
                         catch(FormatException ex)
                         {
-                            throw new Exception("Planilha com formato incompatível.");
+                            throw new Exception("Planilha com formato incompatï¿½vel.");
                         }
                         catch (Exception ex)
                         {
-                            throw new Exception("Dados já inseridos");
+                            throw new Exception("Dados jï¿½ inseridos");
                         }
                     }
                 }

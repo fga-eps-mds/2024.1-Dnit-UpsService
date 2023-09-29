@@ -1,6 +1,5 @@
 ﻿using dominio;
 using Microsoft.AspNetCore.Mvc;
-using repositorio.Interfaces;
 using service.Interfaces;
 
 namespace app.Controllers

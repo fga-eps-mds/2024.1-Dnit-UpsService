@@ -1,5 +1,4 @@
 ﻿using dominio;
-using System.Collections.Generic;
 
 namespace service.Interfaces
 {

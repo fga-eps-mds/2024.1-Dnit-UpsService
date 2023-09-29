@@ -1,9 +1,5 @@
-using dominio;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using service.Interfaces;
-using System;
-using System.IO;
 
 namespace app.Controllers
 {

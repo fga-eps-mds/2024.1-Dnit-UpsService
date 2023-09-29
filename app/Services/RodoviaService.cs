@@ -1,10 +1,7 @@
-﻿using System.IO;
-using dominio;
+﻿using dominio;
 using repositorio.Interfaces;
 using service.Interfaces;
 using Microsoft.VisualBasic.FileIO;
-
-
 
 namespace service
 {

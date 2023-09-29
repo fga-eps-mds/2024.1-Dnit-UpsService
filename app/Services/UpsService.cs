@@ -1,8 +1,6 @@
 ﻿using dominio;
 using repositorio.Interfaces;
 using service.Interfaces;
-using System;
-using System.Collections.Generic;
 
 namespace service
 {

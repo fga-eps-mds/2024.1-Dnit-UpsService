@@ -1,10 +1,5 @@
-using dominio;
-using Microsoft.AspNetCore.Http;
-using service;
 using Microsoft.AspNetCore.Mvc;
 using service.Interfaces;
-using System;
-using System.IO;
 
 
 namespace app.Controllers
@@ -45,7 +40,7 @@ namespace app.Controllers
 
                     if (sinistroService.SuperaTamanhoMaximo(memoryStream))
                     {
-                        return StatusCode(406, "Tamanho máximo de arquivo ultrapassado!");
+                        return StatusCode(406, "Tamanho mï¿½ximo de arquivo ultrapassado!");
                     }
                 }
 

@@ -1,5 +1,4 @@
 ﻿using Npgsql;
-using System;
 using System.Data;
 
 namespace repositorio.Contexto
