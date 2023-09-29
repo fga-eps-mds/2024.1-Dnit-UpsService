@@ -1,4 +1,4 @@
-﻿using dominio;
+﻿using Dominio;
 using test.Stub;
 using Xunit;
 

@@ -1,11 +1,11 @@
-using dominio.Enums;
-using repositorio.Interfaces;
-using repositorio.Contexto;
-using static repositorio.Contexto.ResolverContexto;
+using Dominio.Enums;
+using Repositorio.Interfaces;
+using Repositorio.Contexto;
+using static Repositorio.Contexto.ResolverContexto;
 using Dapper;
-using dominio;
+using Dominio;
 
-namespace repositorio
+namespace Repositorio
 {
     public class SinistroRepositorio : ISinistroRepositorio
     {

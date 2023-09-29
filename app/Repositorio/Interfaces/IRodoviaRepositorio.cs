@@ -1,6 +1,6 @@
-﻿using dominio;
+﻿using Dominio;
 
-namespace repositorio.Interfaces
+namespace Repositorio.Interfaces
 {
     public interface IRodoviaRepositorio
     {

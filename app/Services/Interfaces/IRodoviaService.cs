@@ -1,4 +1,4 @@
-namespace service.Interfaces
+namespace Service.Interfaces
 {
     public interface IRodoviaService
     {

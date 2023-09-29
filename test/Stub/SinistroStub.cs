@@ -1,4 +1,4 @@
-using dominio;
+using Dominio;
 
 namespace test.Stub
 {
@@ -9,8 +9,8 @@ namespace test.Stub
             return new Sinistro
             {
                 Id = 146359,
-                Gravidade = "Sem vítima",
-                Tipo = "Colisão lateral",
+                Gravidade = "Sem vï¿½tima",
+                Tipo = "Colisï¿½o lateral",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 0,
@@ -25,7 +25,7 @@ namespace test.Stub
             {
                 Id = 146409,
                 Gravidade = "Com ferido",
-                Tipo = "Colisão transversal",
+                Tipo = "Colisï¿½o transversal",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 0,
@@ -76,7 +76,7 @@ namespace test.Stub
                 Solo = "Urbano",
                 Data = DateTime.Now,
                 Tipo = "Tombamento",
-                Causa = "Ingestão de álcool",
+                Causa = "Ingestï¿½o de ï¿½lcool",
                 Gravidade = "Com morto",
                 Feridos = 100,
                 Mortos = 100,

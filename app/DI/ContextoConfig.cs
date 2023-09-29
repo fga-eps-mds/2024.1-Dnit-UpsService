@@ -1,6 +1,6 @@
-﻿using dominio.Enums;
-using repositorio.Contexto;
-using static repositorio.Contexto.ResolverContexto;
+﻿using Dominio.Enums;
+using Repositorio.Contexto;
+using static Repositorio.Contexto.ResolverContexto;
 
 namespace app.DI
 {

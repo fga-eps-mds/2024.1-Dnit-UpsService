@@ -1,7 +1,7 @@
 using Moq;
-using service;
-using repositorio.Interfaces;
-using dominio;
+using Service;
+using Repositorio.Interfaces;
+using Dominio;
 
 namespace test.RodoviaServiceTests
 {

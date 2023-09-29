@@ -1,5 +1,5 @@
-﻿using service;
-using service.Interfaces;
+﻿using Service;
+using Service.Interfaces;
 
 namespace app.DI
 {

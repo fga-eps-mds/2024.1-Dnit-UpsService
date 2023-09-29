@@ -1,7 +1,7 @@
 ﻿using Npgsql;
 using System.Data;
 
-namespace repositorio.Contexto
+namespace Repositorio.Contexto
 {
     public class ContextoPostgresql : IContexto, IDisposable
     {

@@ -1,9 +1,9 @@
-using service.Interfaces;
-using repositorio.Interfaces;
+using Service.Interfaces;
+using Repositorio.Interfaces;
 using Microsoft.VisualBasic.FileIO;
-using dominio;
+using Dominio;
 
-namespace service
+namespace Service
 {
     public class SinistroService : ISinistroService
     {

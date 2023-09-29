@@ -1,6 +1,6 @@
-﻿using dominio;
+﻿using Dominio;
 
-namespace service.Interfaces
+namespace Service.Interfaces
 {
     public interface IUpsService
     {

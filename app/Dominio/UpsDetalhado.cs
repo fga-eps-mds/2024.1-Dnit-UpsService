@@ -1,4 +1,4 @@
-﻿namespace dominio
+﻿namespace Dominio
 {
     public class UpsDetalhado
     {

@@ -1,8 +1,8 @@
-﻿using dominio;
-using repositorio.Interfaces;
-using service.Interfaces;
+﻿using Dominio;
+using Repositorio.Interfaces;
+using Service.Interfaces;
 
-namespace service
+namespace Service
 {
     public class UpsService : IUpsService
     {

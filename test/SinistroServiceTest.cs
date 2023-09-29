@@ -1,8 +1,8 @@
 using Moq;
-using service;
-using service.Interfaces;
-using repositorio.Interfaces;
-using dominio;
+using Service;
+using Service.Interfaces;
+using Repositorio.Interfaces;
+using Dominio;
 
 namespace test.SinistroServiceTests
 {

@@ -1,7 +1,7 @@
 using Moq;
-using repositorio.Interfaces;
-using service;
-using service.Interfaces;
+using Repositorio.Interfaces;
+using Service;
+using Service.Interfaces;
 using Xunit;
 
 namespace test

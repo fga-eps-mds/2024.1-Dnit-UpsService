@@ -1,11 +1,11 @@
 ﻿using Dapper;
-using dominio;
-using dominio.Enums;
-using repositorio.Contexto;
-using repositorio.Interfaces;
-using static repositorio.Contexto.ResolverContexto;
+using Dominio;
+using Dominio.Enums;
+using Repositorio.Contexto;
+using Repositorio.Interfaces;
+using static Repositorio.Contexto.ResolverContexto;
 
-namespace repositorio
+namespace Repositorio
 {
     public class UpsRepositorio : IUpsRepositorio
     {

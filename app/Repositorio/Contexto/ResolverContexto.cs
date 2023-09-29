@@ -1,6 +1,6 @@
-﻿using dominio.Enums;
+﻿using Dominio.Enums;
 
-namespace repositorio.Contexto
+namespace Repositorio.Contexto
 {
     public class ResolverContexto
     {

@@ -1,9 +1,9 @@
-﻿using dominio;
-using repositorio.Interfaces;
-using service.Interfaces;
+﻿using Dominio;
+using Repositorio.Interfaces;
+using Service.Interfaces;
 using Microsoft.VisualBasic.FileIO;
 
-namespace service
+namespace Service
 {
     public class RodoviaService : IRodoviaService
     {
@@ -71,11 +71,6 @@ namespace service
                 }
             }
         }
-
-
-
-
-
     }
 }
 
