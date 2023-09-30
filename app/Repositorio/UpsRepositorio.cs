@@ -1,6 +1,6 @@
 ﻿using Dapper;
-using Dominio;
-using Dominio.Enums;
+using Entidades;
+using Entidades.Enums;
 using Repositorio.Contexto;
 using Repositorio.Interfaces;
 using static Repositorio.Contexto.ResolverContexto;

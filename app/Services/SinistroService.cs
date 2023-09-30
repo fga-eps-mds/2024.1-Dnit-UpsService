@@ -1,7 +1,7 @@
 using Service.Interfaces;
 using Repositorio.Interfaces;
 using Microsoft.VisualBasic.FileIO;
-using Dominio;
+using Entidades;
 
 namespace Service
 {
@@ -52,34 +52,35 @@ namespace Service
                                 continue;
                             }
 
-                            Sinistro sinistro = new Sinistro();
-                            sinistro.Id = int.Parse(linha[0]);
-                            sinistro.SiglaUF = linha[1];
-                            sinistro.Rodovia = int.Parse(linha[2]);
-                            sinistro.Km = double.Parse(linha[3]);
-                            sinistro.Snv = linha[4];
-                            sinistro.Sentido = linha[5];
-                            sinistro.Solo = linha[6];
-                            sinistro.Data = DateTime.Parse(linha[7]);
-                            sinistro.Tipo = linha[8];
-                            sinistro.Causa = linha[9];
-                            sinistro.Gravidade = linha[10];
-                            sinistro.Feridos = int.Parse(linha[11]);
-                            sinistro.Mortos = int.Parse(linha[12]);
-                            sinistro.Latitude = double.Parse(linha[13]);
-                            sinistro.Longitude = double.Parse(linha[14]);
+                            Sinistro sinistro = new()
+                            {
+                                Id = int.Parse(linha[0]),
+                                SiglaUF = linha[1],
+                                Rodovia = int.Parse(linha[2]),
+                                Km = double.Parse(linha[3]),
+                                Snv = linha[4],
+                                Sentido = linha[5],
+                                Solo = linha[6],
+                                Data = DateTime.Parse(linha[7]),
+                                Tipo = linha[8],
+                                Causa = linha[9],
+                                Gravidade = linha[10],
+                                Feridos = int.Parse(linha[11]),
+                                Mortos = int.Parse(linha[12]),
+                                Latitude = double.Parse(linha[13]),
+                                Longitude = double.Parse(linha[14])
+                            };
                             sinistro.CalcularUps();
-                            sinistroRepositorio.CadastrarSinistro(sinistro);
+                            sinistroRepositorio.Criar(sinistro);
                             numero_linha++;
-                        
                         }
-                        catch(FormatException ex)
+                        catch (FormatException ex)
                         {
-                            throw new Exception("Planilha com formato incompat�vel.");
+                            throw new Exception("Planilha com formato incompatível.");
                         }
                         catch (Exception ex)
                         {
-                            throw new Exception("Dados j� inseridos");
+                            throw new Exception("Dados já inseridos");
                         }
                     }
                 }

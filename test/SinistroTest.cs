@@ -1,4 +1,4 @@
-﻿using Dominio;
+﻿using Entidades;
 using test.Stub;
 using Xunit;
 

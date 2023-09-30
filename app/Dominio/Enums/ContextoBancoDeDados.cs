@@ -1,4 +1,4 @@
-﻿namespace Dominio.Enums
+﻿namespace Entidades.Enums
 {
     public enum ContextoBancoDeDados
     {

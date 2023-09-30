@@ -1,4 +1,4 @@
-﻿using Dominio;
+﻿using Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
 

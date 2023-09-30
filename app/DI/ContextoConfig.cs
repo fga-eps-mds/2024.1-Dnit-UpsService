@@ -1,4 +1,4 @@
-﻿using Dominio.Enums;
+﻿using Entidades.Enums;
 using Repositorio.Contexto;
 using static Repositorio.Contexto.ResolverContexto;
 

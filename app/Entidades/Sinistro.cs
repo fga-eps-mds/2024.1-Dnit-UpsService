@@ -1,4 +1,4 @@
-﻿namespace Dominio
+﻿namespace Entidades
 {
     public class Sinistro
     {

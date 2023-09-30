@@ -1,4 +1,4 @@
-﻿using Dominio;
+﻿using Entidades;
 using Repositorio.Interfaces;
 using Service.Interfaces;
 using Microsoft.VisualBasic.FileIO;

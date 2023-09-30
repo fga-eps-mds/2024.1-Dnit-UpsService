@@ -1,9 +1,9 @@
-using Dominio;
+using Entidades;
 
 namespace Repositorio.Interfaces
 {
 	public interface ISinistroRepositorio
 	{
-        public void CadastrarSinistro(Sinistro sinistro);
+        Sinistro Criar(Sinistro sinistro);
     }
 }

@@ -1,4 +1,4 @@
-﻿using Dominio;
+﻿using Entidades;
 
 namespace Service.Interfaces
 {

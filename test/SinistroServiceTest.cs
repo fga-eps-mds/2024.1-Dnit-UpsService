@@ -2,7 +2,7 @@ using Moq;
 using Service;
 using Service.Interfaces;
 using Repositorio.Interfaces;
-using Dominio;
+using Entidades;
 
 namespace test.SinistroServiceTests
 {
@@ -32,7 +32,7 @@ namespace test.SinistroServiceTests
             var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
 
             sinistroService.CadastrarSinistroViaPlanilha(memoryStream);
-            mockSinistroRepositorio.Verify(mock => mock.CadastrarSinistro(It.IsAny<Sinistro>()), Times.Exactly(3));
+            mockSinistroRepositorio.Verify(mock => mock.Criar(It.IsAny<Sinistro>()), Times.Exactly(3));
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace test.SinistroServiceTests
             var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
 
             sinistroService.CadastrarSinistroViaPlanilha(memoryStream);
-            mockSinistroRepositorio.Verify(mock => mock.CadastrarSinistro(It.IsAny<Sinistro>()), Times.Exactly(3));
+            mockSinistroRepositorio.Verify(mock => mock.Criar(It.IsAny<Sinistro>()), Times.Exactly(3));
         }
 
         [Fact]

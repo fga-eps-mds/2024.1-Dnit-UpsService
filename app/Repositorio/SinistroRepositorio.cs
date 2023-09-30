@@ -1,22 +1,25 @@
-using Dominio.Enums;
+using Entidades.Enums;
 using Repositorio.Interfaces;
 using Repositorio.Contexto;
 using static Repositorio.Contexto.ResolverContexto;
 using Dapper;
-using Dominio;
+using Entidades;
+using app.Entidades;
 
 namespace Repositorio
 {
     public class SinistroRepositorio : ISinistroRepositorio
     {
         private readonly IContexto contexto;
+        private readonly AppDbContext db;
 
-        public SinistroRepositorio(ResolverContextoDelegate resolverContexto)
+        public SinistroRepositorio(ResolverContextoDelegate resolverContexto, AppDbContext db)
         {
             contexto = resolverContexto(ContextoBancoDeDados.Postgresql);
+            this.db = db;
         }
 
-        public void CadastrarSinistro(Sinistro sinistro)
+        public Sinistro Criar(Sinistro sinistro)
         {
             var sqlInserirSinistro = @"INSERT INTO public.sinistro(id, uf, rodovia, quilometro, snv, sentido, solo, data, tipo, causa,
             gravidade, feridos, mortos, latitude, longitude, ups)
@@ -25,7 +28,7 @@ namespace Repositorio
             @Feridos, @Mortos,   
             @Latitude, @Longitude, @Ups)";
 
-            var parametrosSinistro = new
+            var sin = new Sinistro
             {
                 Id = sinistro.Id,
                 SiglaUF = sinistro.SiglaUF,
@@ -43,10 +46,11 @@ namespace Repositorio
                 Latitude = sinistro.Latitude,
                 Longitude = sinistro.Longitude,
                 Ups = sinistro.Ups,
-                
             };
+            // contexto?.Conexao.Execute(sqlInserirSinistro, parametrosSinistro);
 
-            contexto?.Conexao.Execute(sqlInserirSinistro, parametrosSinistro);
+            db.Add(sinistro);
+            return sin;
         }
     }
 }
