@@ -1,4 +1,6 @@
-﻿namespace Entidades
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Entidades
 {
     public class Sinistro
     {
@@ -9,7 +11,15 @@
         public string? Snv { get; set; }
         public string? Sentido { get; set; }
         public string? Solo { get; set; }
-        public DateTime Data { get; set; }
+        [NotMapped]
+        public DateTimeOffset Data { get; set; }
+
+        public DateTime DataUtc
+        {
+            get => Data.UtcDateTime;
+            set => Data = new DateTimeOffset(value, TimeSpan.Zero);
+        }
+        
         public string? Tipo { get; set; }
         public string? Causa { get; set; }
         public string? Gravidade { get; set; }

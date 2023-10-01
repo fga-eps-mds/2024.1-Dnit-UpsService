@@ -13,7 +13,7 @@ namespace app.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Entidades",
+                name: "Sinistros",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -24,7 +24,7 @@ namespace app.Migrations
                     Snv = table.Column<string>(type: "text", nullable: true),
                     Sentido = table.Column<string>(type: "text", nullable: true),
                     Solo = table.Column<string>(type: "text", nullable: true),
-                    Data = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DataUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Tipo = table.Column<string>(type: "text", nullable: true),
                     Causa = table.Column<string>(type: "text", nullable: true),
                     Gravidade = table.Column<string>(type: "text", nullable: true),
@@ -36,7 +36,7 @@ namespace app.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Entidades", x => x.Id);
+                    table.PrimaryKey("PK_Sinistros", x => x.Id);
                 });
         }
 
@@ -44,7 +44,7 @@ namespace app.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Entidades");
+                name: "Sinistros");
         }
     }
 }

@@ -33,7 +33,7 @@ namespace app.Migrations
                     b.Property<string>("Causa")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Data")
+                    b.Property<DateTime>("DataUtc")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Feridos")
@@ -77,7 +77,7 @@ namespace app.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Entidades");
+                    b.ToTable("Sinistros");
                 });
 #pragma warning restore 612, 618
         }

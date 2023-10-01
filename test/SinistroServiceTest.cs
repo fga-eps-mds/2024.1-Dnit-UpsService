@@ -1,23 +1,27 @@
 using Moq;
 using Service;
-using Service.Interfaces;
 using Repositorio.Interfaces;
 using Entidades;
+using app.Entidades;
+using Microsoft.EntityFrameworkCore;
 
 namespace test.SinistroServiceTests
 {
     public class SinistroServiceTest
     {
+        private readonly DbContextOptions<AppDbContext> options = new();
+        private readonly Mock<AppDbContext> mockDb;
         private readonly SinistroService sinistroService;
         private readonly Mock<ISinistroRepositorio> mockSinistroRepositorio;
-        private string caminhoDoArquivo;
         private readonly string caminhoTests = Path.Join("..", "..", "..", "..", "test");
+        private string caminhoDoArquivo;
 
         public SinistroServiceTest()
         {
-            caminhoDoArquivo = Path.Join(caminhoTests, "Stub", "ExemploSin.csv");
             mockSinistroRepositorio = new();
-            sinistroService = new SinistroService(mockSinistroRepositorio.Object);
+            mockDb = new(options);
+            sinistroService = new SinistroService(mockSinistroRepositorio.Object, mockDb.Object);
+            caminhoDoArquivo = Path.Join(caminhoTests, "Stub", "ExemploSin.csv");
         }
 
         [Fact]
@@ -47,15 +51,10 @@ namespace test.SinistroServiceTests
         [Fact]
         public void SuperaTamanhoMaximo_QuandoPlanilhaComTamanhoMaiorQueOMaximoForPassada_DeveRetornarTrue()
         {
-            Mock<ISinistroRepositorio> mockSinistroRepositorio = new();
-            ISinistroService sinistroService = new SinistroService(mockSinistroRepositorio.Object);
-
             caminhoDoArquivo = Path.Join(caminhoTests, "Stub", "planilhaExemploSinistro.csv");
 
-            MemoryStream memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
-
+            var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
             bool resultado = sinistroService.SuperaTamanhoMaximo(memoryStream);
-
             Assert.True(resultado);
         }
     }

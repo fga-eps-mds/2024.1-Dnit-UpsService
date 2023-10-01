@@ -2,16 +2,25 @@ using Service.Interfaces;
 using Repositorio.Interfaces;
 using Microsoft.VisualBasic.FileIO;
 using Entidades;
+using app.Entidades;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
     public class SinistroService : ISinistroService
     {
         private readonly ISinistroRepositorio sinistroRepositorio;
-        public SinistroService(ISinistroRepositorio sinistroRepositorio)
+        private readonly AppDbContext db;
+        public SinistroService(ISinistroRepositorio sinistroRepositorio, AppDbContext db)
         {
             this.sinistroRepositorio = sinistroRepositorio;
+            this.db = db;
         }
+
+        // public SinistroService(ISinistroRepositorio sinistroRepositorio)
+        // {
+        //     this.sinistroRepositorio = sinistroRepositorio;
+        // }
 
         public bool SuperaTamanhoMaximo(MemoryStream planilha)
         {
@@ -26,10 +35,10 @@ namespace Service
             }
         }
 
+        // TODO: adicionar 'Async'
         public void CadastrarSinistroViaPlanilha(MemoryStream planilha)
         {
-
-            int numero_linha = 2;
+            int numeroLinha = 2;
 
             using (var reader = new StreamReader(planilha))
             {
@@ -40,19 +49,20 @@ namespace Service
 
                     bool primeiralinha = false;
 
-
+                    Sinistro sinistro;
+                    string[] linha = Array.Empty<string>();
                     while (!parser.EndOfData)
                     {
                         try
                         {
-                            string[] linha = parser.ReadFields();
+                            linha = parser.ReadFields() ?? Array.Empty<string>();
                             if (!primeiralinha)
                             {
                                 primeiralinha = true;
                                 continue;
                             }
 
-                            Sinistro sinistro = new()
+                            sinistro = new()
                             {
                                 Id = int.Parse(linha[0]),
                                 SiglaUF = linha[1],
@@ -72,15 +82,17 @@ namespace Service
                             };
                             sinistro.CalcularUps();
                             sinistroRepositorio.Criar(sinistro);
-                            numero_linha++;
+                            db.SaveChanges();
+                            numeroLinha++;
                         }
                         catch (FormatException ex)
                         {
-                            throw new Exception("Planilha com formato incompatível.");
+                            throw new Exception("Planilha com formato incompatível.", ex);
                         }
-                        catch (Exception ex)
+                        catch (DbUpdateException ex)
                         {
-                            throw new Exception("Dados já inseridos");
+                            var mensagem = $"Dados já inseridos. Linha {numeroLinha}\nSinistro: {string.Join(';', linha)}";
+                            throw new Exception(mensagem, ex);
                         }
                     }
                 }

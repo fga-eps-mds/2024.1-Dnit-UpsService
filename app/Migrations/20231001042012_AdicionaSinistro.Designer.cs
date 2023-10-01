@@ -12,7 +12,7 @@ using app.Entidades;
 namespace app.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230930015328_AdicionaSinistro")]
+    [Migration("20231001042012_AdicionaSinistro")]
     partial class AdicionaSinistro
     {
         /// <inheritdoc />
@@ -36,7 +36,7 @@ namespace app.Migrations
                     b.Property<string>("Causa")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Data")
+                    b.Property<DateTime>("DataUtc")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Feridos")
@@ -80,7 +80,7 @@ namespace app.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Entidades");
+                    b.ToTable("Sinistros");
                 });
 #pragma warning restore 612, 618
         }
