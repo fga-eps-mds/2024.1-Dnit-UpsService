@@ -1,9 +1,10 @@
+using api;
 using Entidades;
 
 namespace Repositorio.Interfaces
 {
 	public interface ISinistroRepositorio
 	{
-        Sinistro Criar(Sinistro sinistro);
+        Sinistro Criar(SinistroDTO sinistro);
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.VisualBasic.FileIO;
 using Entidades;
 using app.Entidades;
 using Microsoft.EntityFrameworkCore;
+using api;
 
 namespace Service
 {
@@ -49,7 +50,7 @@ namespace Service
 
                     bool primeiralinha = false;
 
-                    Sinistro sinistro;
+                    SinistroDTO sinistro;
                     string[] linha = Array.Empty<string>();
                     while (!parser.EndOfData)
                     {
@@ -80,7 +81,6 @@ namespace Service
                                 Latitude = double.Parse(linha[13]),
                                 Longitude = double.Parse(linha[14])
                             };
-                            sinistro.CalcularUps();
                             sinistroRepositorio.Criar(sinistro);
                             db.SaveChanges();
                             numeroLinha++;

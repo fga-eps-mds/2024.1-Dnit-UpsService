@@ -1,3 +1,4 @@
+using api;
 using app.Entidades;
 using Repositorio.Interfaces;
 using Entidades;
@@ -13,10 +14,28 @@ namespace Repositorio
             this.db = db;
         }
 
-        public Sinistro Criar(Sinistro sinistro)
+        public Sinistro Criar(SinistroDTO sinistro)
         {
-            db.Add(sinistro);
-            return sinistro;
+            var sin = new Sinistro
+            {
+                SiglaUF = sinistro.SiglaUF,
+                Rodovia = sinistro.Rodovia,
+                Km = sinistro.Km,
+                Snv = sinistro.Snv,
+                Sentido = sinistro.Sentido,
+                Solo = sinistro.Solo,
+                Data = sinistro.Data,
+                Tipo = sinistro.Tipo,
+                Causa = sinistro.Causa,
+                Gravidade = sinistro.Gravidade,
+                Feridos = sinistro.Feridos,
+                Mortos = sinistro.Mortos,
+                Latitude = sinistro.Latitude,
+                Longitude = sinistro.Longitude,
+            };
+            sin.CalcularUps();
+            db.Sinistros.Add(sin);
+            return sin;
         }
     }
 }
