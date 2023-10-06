@@ -1,10 +1,13 @@
-﻿namespace Entidades
-{
-    public class RodoviaDTO
-    {
+﻿using System.ComponentModel.DataAnnotations;
 
+namespace Entidades
+{
+    public class Rodovia
+    {
+        [Key]
+        public int Id { get; set; }
         public int AnoApuracao { get; set; }
-        public string SiglaUF { get; set; }
+        public string Uf { get; set; }
         public int NumeroRodovia { get; set; }
         public string TipoTrecho { get; set; }
         public string CodigoSNV { get; set; }

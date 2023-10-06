@@ -2,6 +2,8 @@ using Moq;
 using Service;
 using Repositorio.Interfaces;
 using Entidades;
+using app.Entidades;
+using Microsoft.EntityFrameworkCore;
 
 namespace test.RodoviaServiceTests
 {
@@ -9,6 +11,8 @@ namespace test.RodoviaServiceTests
     {
         private readonly RodoviaService rodoviaService;
         private readonly Mock<IRodoviaRepositorio> mockRodoviaRepositorio;
+        private readonly Mock<AppDbContext> mockDb;
+        private readonly DbContextOptions<AppDbContext> options = new();
         private string caminhoDoArquivo;
         private readonly string caminhoTests = Path.Join("..", "..", "..", "..", "test");
 
@@ -17,7 +21,8 @@ namespace test.RodoviaServiceTests
         {
             caminhoDoArquivo = Path.Join(caminhoTests, "Stub", "planilhaExemplo.csv");
             mockRodoviaRepositorio = new();
-            rodoviaService = new RodoviaService(mockRodoviaRepositorio.Object);
+            mockDb = new (options);
+            rodoviaService = new RodoviaService(mockRodoviaRepositorio.Object, mockDb.Object);
         }
 
         [Fact]
@@ -48,7 +53,7 @@ namespace test.RodoviaServiceTests
         public void SuperaTamanhoMaximo_QuandoPlanilhaComTamanhoMaiorQueOMaximoForPassada_DeveRetornarTrue()
         {
             caminhoDoArquivo = Path.Join(caminhoTests, "Stub", "planilha_tamanho_max.csv");
-            
+
             MemoryStream memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
 
             bool resultado = rodoviaService.SuperaTamanhoMaximo(memoryStream);
