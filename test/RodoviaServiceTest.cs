@@ -4,6 +4,7 @@ using Repositorio.Interfaces;
 using Entidades;
 using app.Entidades;
 using Microsoft.EntityFrameworkCore;
+using api;
 
 namespace test.RodoviaServiceTests
 {

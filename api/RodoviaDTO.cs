@@ -1,10 +1,10 @@
-﻿namespace Entidades
+﻿namespace api
 {
     public class RodoviaDTO
     {
 
         public int AnoApuracao { get; set; }
-        public string SiglaUF { get; set; }
+        public string Uf { get; set; }
         public int NumeroRodovia { get; set; }
         public string TipoTrecho { get; set; }
         public string CodigoSNV { get; set; }

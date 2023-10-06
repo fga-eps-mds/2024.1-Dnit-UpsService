@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 
-using Entidades;
 using Repositorio.Interfaces;
 using Service.Interfaces;
 using app.Entidades;
+using api;
 
 namespace Service
 {
@@ -52,7 +52,7 @@ namespace Service
                 var rodovia = new RodoviaDTO
                 {
                     AnoApuracao = int.Parse(linha[0]),
-                    SiglaUF = linha[1],
+                    Uf = linha[1],
                     NumeroRodovia = int.Parse(linha[2]),
                     TipoTrecho = linha[3],
                     CodigoSNV = linha[4],
@@ -64,7 +64,7 @@ namespace Service
                     FederalCoincidente = linha[10],
                     EstadualCoincidente = linha[11],
                     SuperficieEstadual = linha[12],
-                    MP082 = (linha[13] != "Não"),
+                    MP082 = linha[13] != "Não",
                     ConcessaoConvenio = linha[14]
                 };
 

@@ -1,9 +1,4 @@
-﻿using Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using api;
 
 namespace test.Stub
 {
@@ -14,7 +9,7 @@ namespace test.Stub
             return new RodoviaDTO
             {
                 AnoApuracao = 2091,
-                SiglaUF = "UF",
+                Uf = "UF",
                 NumeroRodovia = 10,
                 TipoTrecho = "ABCX",
                 CodigoSNV = "asdasd",

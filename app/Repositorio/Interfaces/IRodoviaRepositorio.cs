@@ -1,4 +1,5 @@
-﻿using Entidades;
+﻿using api;
+using Entidades;
 
 namespace Repositorio.Interfaces
 {

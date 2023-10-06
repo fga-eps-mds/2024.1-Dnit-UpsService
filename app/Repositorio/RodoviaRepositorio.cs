@@ -1,4 +1,5 @@
-﻿using app.Entidades;
+﻿using api;
+using app.Entidades;
 using Entidades;
 using Repositorio.Interfaces;
 
@@ -15,16 +16,10 @@ namespace Repositorio
 
         public Rodovia CadastrarRodovia(RodoviaDTO rodovia)
         {
-            // var sqlInserirRodovia = @"INSERT INTO public.rodovia( ano_apuracao, sigla_uf, numero_rodovia, tipo_trecho, codigo_snv,
-            //                           local_inicio_fim, km_inicial, km_final, extensao, superficie, federal_coincidente, estadual_coincidente,
-            //                           superficie_estadual, mp082, concessao_convenio)
-            //                           VALUES( @AnoApuracao, @SiglaUF, @NumeroRodovia, @TipoTrecho, @CodigoSNV, @LocalInicioFim, @KmInicial, @KmFinal,
-            //                           @Extensao, @Superficie, @FederalCoincidente, @EstadualCoincidente, @SuperficieEstadual, @MP082, @ConcessaoConvenio)";
-            // contexto?.Conexao.Execute(sqlInserirRodovia, parametrosRodovia);
             var rod = new Rodovia
             {
                 AnoApuracao = rodovia.AnoApuracao,
-                Uf = rodovia.SiglaUF,
+                Uf = rodovia.Uf,
                 NumeroRodovia = rodovia.NumeroRodovia,
                 TipoTrecho = rodovia.TipoTrecho,
                 CodigoSNV = rodovia.CodigoSNV,
@@ -38,7 +33,6 @@ namespace Repositorio
                 SuperficieEstadual = rodovia.SuperficieEstadual,
                 MP082 = rodovia.MP082,
                 ConcessaoConvenio = rodovia.ConcessaoConvenio,
-
             };
 
             db.Rodovias.Add(rod);
