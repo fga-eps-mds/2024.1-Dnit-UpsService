@@ -55,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"fga-eps-mds_2023.1-Dnit-UpsService" /o:"fga-eps-mds-1" /d:sonar.login="5e981eabd44a537f64a8d46d957ee6e352a1447f" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.testExecutionReportPaths=results.xml
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"fga-eps-mds_2023.2-Dnit-UpsService" /o:"fga-eps-mds-1" /d:sonar.login="5e981eabd44a537f64a8d46d957ee6e352a1447f" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.testExecutionReportPaths=results.xml
           dotnet build
           dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
           dotnet test --logger "trx;LogFileName=results.trx" --results-directory ./TestResults/results.xml
@@ -68,7 +68,7 @@ jobs:
     steps:
       - name: Get file name
         id: name
-        run: echo "::set-output name=file_name::fga-eps-mds_2023.1-Dnit-UpsService-$(TZ='America/Sao_Paulo' date +'%m-%d-%Y-%H-%M-%S')-${{github.ref_name}}"
+        run: echo "::set-output name=file_name::fga-eps-mds_2023.2-Dnit-UpsService-$(TZ='America/Sao_Paulo' date +'%m-%d-%Y-%H-%M-%S')-${{github.ref_name}}"
 
       - name: Copy repository
         uses: actions/checkout@v2
@@ -86,7 +86,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
         with:
           source_file: ${{ steps.name.outputs.file_name }}.json
-          destination_repo: 'fga-eps-mds/2023.1-Dnit-DOC'
+          destination_repo: 'fga-eps-mds/2023.2-Dnit-DOC'
           destination_folder: 'analytics-raw-data'
           user_email: ${{ secrets.GIT_EMAIL}}
           user_name: ${{ secrets.GIT_USER }}
