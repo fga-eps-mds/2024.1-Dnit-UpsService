@@ -15,26 +15,17 @@ namespace app.Controllers
             this.upsService = upsService;
         }
 
-        [HttpGet("obter/sinistros")]
-        public IActionResult ObterUps()
-        {
-            IEnumerable<Sinistro> sinistros = upsService.ObterSinistros();
-
-            return new OkObjectResult(sinistros);
-        }
-
         [HttpPost("calcular/ups/sinistros")]
-        public IActionResult CalcularUpsSinistros()
+        public async Task<IActionResult> CalcularUpsSinistros()
         {
-            upsService.CalcularUpsEmMassa();
-
+            await upsService.CalcularUpsEmMassa();
             return Ok();
         }
 
         [HttpGet("calcular/ups/escola")]
-        public IActionResult CalcularUpsEscola([FromQuery] Escola escola)
+        public async Task<IActionResult> CalcularUpsEscola([FromQuery] Escola escola)
         {
-            UpsDetalhado upsDetalhado = upsService.CalcularUpsEscola(escola);
+            var upsDetalhado = await upsService.CalcularUpsEscolaAsync(escola);
             return new OkObjectResult(upsDetalhado);
         }
     }

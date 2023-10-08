@@ -3,8 +3,9 @@ using Entidades;
 
 namespace Repositorio.Interfaces
 {
-	public interface ISinistroRepositorio
-	{
-        Sinistro Criar(SinistroDTO sinistro);
+    public interface ISinistroRepositorio
+    {
+        public Sinistro Criar(SinistroDTO sinistro);
+        public Task<IEnumerable<Sinistro>> ObterTodos();
     }
 }

@@ -12,27 +12,23 @@ namespace Service
     {
         private readonly ISinistroRepositorio sinistroRepositorio;
         private readonly AppDbContext db;
+
         public SinistroService(ISinistroRepositorio sinistroRepositorio, AppDbContext db)
         {
             this.sinistroRepositorio = sinistroRepositorio;
             this.db = db;
         }
 
-        // public SinistroService(ISinistroRepositorio sinistroRepositorio)
-        // {
-        //     this.sinistroRepositorio = sinistroRepositorio;
-        // }
-
         public bool SuperaTamanhoMaximo(MemoryStream planilha)
         {
             using (var reader = new StreamReader(planilha))
             {
-                int tamanho_max = 5000;
-                int quantidade_sinistros = -1;
+                int tamanhoMax = 5000;
+                int quantidadeSinistros = -1;
 
-                while (reader.ReadLine() != null) { quantidade_sinistros++; }
+                while (reader.ReadLine() != null) { quantidadeSinistros++; }
 
-                return quantidade_sinistros > tamanho_max;
+                return quantidadeSinistros > tamanhoMax;
             }
         }
 
@@ -97,6 +93,11 @@ namespace Service
                     }
                 }
             }
+        }
+
+        public async Task<IEnumerable<Sinistro>> ObterTodos()
+        {
+            return await sinistroRepositorio.ObterTodos();
         }
     }
 }

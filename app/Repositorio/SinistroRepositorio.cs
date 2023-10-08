@@ -2,6 +2,7 @@ using api;
 using app.Entidades;
 using Repositorio.Interfaces;
 using Entidades;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositorio
 {
@@ -36,6 +37,11 @@ namespace Repositorio
             sin.CalcularUps();
             db.Sinistros.Add(sin);
             return sin;
+        }
+
+        public async Task<IEnumerable<Sinistro>> ObterTodos()
+        {
+            return await db.Sinistros.ToListAsync();
         }
     }
 }

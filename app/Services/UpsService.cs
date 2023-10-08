@@ -1,4 +1,5 @@
-﻿using Entidades;
+﻿using app.Entidades;
+using Entidades;
 using Repositorio.Interfaces;
 using Service.Interfaces;
 
@@ -6,40 +7,31 @@ namespace Service
 {
     public class UpsService : IUpsService
     {
-        private readonly IUpsRepositorio upsRepositorio;
+        private readonly ISinistroRepositorio sinistroRepositorio;
+        private readonly AppDbContext db;
         private const double raioTerraEmKm = 6371.0;
 
-
-        public UpsService(IUpsRepositorio upsRepositorio)
+        public UpsService(ISinistroRepositorio sinistroRepositorio, AppDbContext db)
         {
-            this.upsRepositorio = upsRepositorio;
+            this.sinistroRepositorio = sinistroRepositorio;
+            this.db = db;
         }
 
-        public IEnumerable<Sinistro> ObterSinistros()
+        public async Task CalcularUpsEmMassa()
         {
-            IEnumerable<Sinistro> sinistros = upsRepositorio.ObterSinistros();
-
-            return sinistros;
-        }
-
-
-        public void CalcularUpsEmMassa()
-        {
-            IEnumerable<Sinistro> sinistros = upsRepositorio.ObterSinistros();
-
-            foreach(Sinistro sinistro in sinistros)
+            var sinistros = await sinistroRepositorio.ObterTodos();
+            foreach (var sinistro in sinistros)
             {
                 sinistro.CalcularUps();
-
-                upsRepositorio.AtualizarUpsSinistro(sinistro);
             }
+            await db.SaveChangesAsync();
         }
 
-        public UpsDetalhado CalcularUpsEscola(Escola escola)
+        public async Task<UpsDetalhado> CalcularUpsEscolaAsync(Escola escola)
         {
-            IEnumerable<Sinistro> sinistros = ObterSinistros();
-            UpsDetalhado upsDetalhado = new();
-            
+            var sinistros = await sinistroRepositorio.ObterTodos();
+            var upsDetalhado = new UpsDetalhado();
+
             double raio = 2.0; //raio esta em quilometro
 
             Dictionary<int, int> upsPorAno = new()
@@ -51,11 +43,13 @@ namespace Service
                 { 2018, 0 }
             };
 
-            foreach (Sinistro sinistro in sinistros)
+            foreach (var sinistro in sinistros)
             {
                 if (CalcularDistancia(sinistro.Latitude, sinistro.Longitude, escola.Latitude, escola.Longitude) <= raio)
                 {
-                    upsPorAno[sinistro.Data.Year] += sinistro.Ups ?? 0;
+                    if (upsPorAno.ContainsKey(sinistro.Data.Year)) {
+                        upsPorAno[sinistro.Data.Year] += sinistro.Ups ?? 0;
+                    }
                 }
             }
 
@@ -66,11 +60,8 @@ namespace Service
             upsDetalhado.Ups2018 = upsPorAno[2018];
 
             upsDetalhado.CalcularUpsGeral();
-
             return upsDetalhado;
         }
-
-
 
         public static double ConverterParaRadianos(double grau)
         {

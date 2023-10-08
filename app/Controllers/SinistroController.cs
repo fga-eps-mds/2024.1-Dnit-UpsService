@@ -6,10 +6,8 @@ namespace app.Controllers
 {
     [ApiController]
     [Route("api/sinistro")]
-
     public class SinistroController : ControllerBase
     {
-
         private readonly ISinistroService sinistroService;
 
         public SinistroController(ISinistroService sinistroService)
@@ -17,9 +15,17 @@ namespace app.Controllers
             this.sinistroService = sinistroService;
         }
 
+        // Não segue o padrão de endpoints da classe pra manter
+        // compatibilidade com o frontend.
+        [HttpGet("/api/obter/sinistros")]
+        public async Task<IActionResult> ObterUps()
+        {
+            var sinistros = await sinistroService.ObterTodos();
+            return new OkObjectResult(sinistros);
+        }
+
         [Consumes("multipart/form-data")]
         [HttpPost("cadastrarSinistroPlanilha")]
-
         public async Task<IActionResult> EnviarPlanilha(IFormFile arquivo)
         {
 
@@ -58,6 +64,5 @@ namespace app.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
     }
 }
