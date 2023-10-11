@@ -1,4 +1,4 @@
-name: SonarCloud
+name: UpsService-Release
 on:
   push:
     tags:
