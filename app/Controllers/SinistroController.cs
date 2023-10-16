@@ -18,7 +18,7 @@ namespace app.Controllers
         // Não segue o padrão de endpoints da classe pra manter
         // compatibilidade com o frontend.
         [HttpGet("/api/obter/sinistros")]
-        public async Task<IActionResult> ObterUps()
+        public async Task<IActionResult> ObterUpsAsync()
         {
             var sinistros = await sinistroService.ObterTodosAsync();
             return new OkObjectResult(sinistros);
@@ -26,7 +26,7 @@ namespace app.Controllers
 
         [Consumes("multipart/form-data")]
         [HttpPost("cadastrarSinistroPlanilha")]
-        public async Task<IActionResult> EnviarPlanilha(IFormFile arquivo)
+        public async Task<IActionResult> EnviarPlanilhaAsync(IFormFile arquivo)
         {
 
             try

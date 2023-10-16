@@ -17,7 +17,7 @@ namespace Service
             this.db = db;
         }
 
-        public async Task CalcularUpsEmMassa()
+        public async Task CalcularUpsEmMassaAsync()
         {
             var sinistros = await sinistroRepositorio.ObterTodosAsync();
             foreach (var sinistro in sinistros)

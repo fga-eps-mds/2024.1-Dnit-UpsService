@@ -16,14 +16,14 @@ namespace app.Controllers
         }
 
         [HttpPost("calcular/ups/sinistros")]
-        public async Task<IActionResult> CalcularUpsSinistros()
+        public async Task<IActionResult> CalcularUpsSinistrosAsync()
         {
-            await upsService.CalcularUpsEmMassa();
+            await upsService.CalcularUpsEmMassaAsync();
             return Ok();
         }
 
         [HttpGet("calcular/ups/escola")]
-        public async Task<IActionResult> CalcularUpsEscola([FromQuery] Escola escola)
+        public async Task<IActionResult> CalcularUpsEscolaAsync([FromQuery] Escola escola)
         {
             var upsDetalhado = await upsService.CalcularUpsEscolaAsync(escola);
             return new OkObjectResult(upsDetalhado);
