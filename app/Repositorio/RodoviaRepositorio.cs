@@ -19,7 +19,7 @@ namespace Repositorio
             var rod = new Rodovia
             {
                 AnoApuracao = rodovia.AnoApuracao,
-                Uf = rodovia.Uf,
+                Uf = rodovia.SiglaUf,
                 NumeroRodovia = rodovia.NumeroRodovia,
                 TipoTrecho = rodovia.TipoTrecho,
                 CodigoSNV = rodovia.CodigoSNV,

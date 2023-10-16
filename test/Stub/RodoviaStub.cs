@@ -9,7 +9,7 @@ namespace test.Stub
             return new RodoviaDTO
             {
                 AnoApuracao = 2091,
-                Uf = "UF",
+                SiglaUf = "UF",
                 NumeroRodovia = 10,
                 TipoTrecho = "ABCX",
                 CodigoSNV = "asdasd",
