@@ -20,7 +20,7 @@ namespace app.Controllers
         [HttpGet("/api/obter/sinistros")]
         public async Task<IActionResult> ObterUps()
         {
-            var sinistros = await sinistroService.ObterTodos();
+            var sinistros = await sinistroService.ObterTodosAsync();
             return new OkObjectResult(sinistros);
         }
 

@@ -95,9 +95,9 @@ namespace Service
             }
         }
 
-        public async Task<IEnumerable<Sinistro>> ObterTodos()
+        public async Task<IEnumerable<Sinistro>> ObterTodosAsync()
         {
-            return await sinistroRepositorio.ObterTodos();
+            return await sinistroRepositorio.ObterTodosAsync();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Repositorio
             return sin;
         }
 
-        public async Task<IEnumerable<Sinistro>> ObterTodos()
+        public async Task<IEnumerable<Sinistro>> ObterTodosAsync()
         {
             return await db.Sinistros.ToListAsync();
         }

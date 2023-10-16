@@ -19,7 +19,7 @@ namespace Service
 
         public async Task CalcularUpsEmMassa()
         {
-            var sinistros = await sinistroRepositorio.ObterTodos();
+            var sinistros = await sinistroRepositorio.ObterTodosAsync();
             foreach (var sinistro in sinistros)
             {
                 sinistro.CalcularUps();
@@ -29,7 +29,7 @@ namespace Service
 
         public async Task<UpsDetalhado> CalcularUpsEscolaAsync(Escola escola)
         {
-            var sinistros = await sinistroRepositorio.ObterTodos();
+            var sinistros = await sinistroRepositorio.ObterTodosAsync();
             var upsDetalhado = new UpsDetalhado();
 
             double raio = 2.0; //raio esta em quilometro

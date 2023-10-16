@@ -6,6 +6,6 @@ namespace Repositorio.Interfaces
     public interface ISinistroRepositorio
     {
         public Sinistro Criar(SinistroDTO sinistro);
-        public Task<IEnumerable<Sinistro>> ObterTodos();
+        public Task<IEnumerable<Sinistro>> ObterTodosAsync();
     }
 }

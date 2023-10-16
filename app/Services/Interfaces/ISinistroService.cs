@@ -6,6 +6,6 @@ namespace Service.Interfaces
     {
         public bool SuperaTamanhoMaximo(MemoryStream planilha);
         public void CadastrarSinistroViaPlanilha(MemoryStream planilha);
-        public Task<IEnumerable<Sinistro>> ObterTodos();
+        public Task<IEnumerable<Sinistro>> ObterTodosAsync();
     }
 }
