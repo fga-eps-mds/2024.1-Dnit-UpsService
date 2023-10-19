@@ -1,5 +1,6 @@
 using api;
 using Entidades;
+using Stub;
 
 namespace test.Stub
 {
@@ -85,6 +86,34 @@ namespace test.Stub
                 Latitude = 2.228445,
                 Longitude = 44.1347544
             };
+        }
+
+        public static IEnumerable<Sinistro> ListarSinistros()
+        {
+            while (true)
+            {
+                var sinistro = new Sinistro
+                {
+                    Id = Random.Shared.Next(),
+                    Uf = Enum.GetValues<UF>().TakeRandom().FirstOrDefault(),
+                    Ups = Random.Shared.Next() % 16,
+                    Rodovia = 1,
+                    Km = 1,
+                    Feridos = Random.Shared.Next() % 30,
+                    Mortos = Random.Shared.Next() % 10,
+                    Latitude = Random.Shared.NextDouble() * 180 - 90,   // [-90, +90]
+                    Longitude = Random.Shared.NextDouble() * 360 - 180, // [-180, +180]
+                    Data = DateTimeOffset.Now,
+                    Causa = $"Causa número {Random.Shared.Next()}",
+                    Snv = $"Snv {Random.Shared.Next()}",
+                    Sentido = $"Sentido {Random.Shared.Next()}",
+                    Solo = $"Solo {Random.Shared.Next()}",
+                    Tipo = $"Tipo {Random.Shared.Next()}",
+                    Gravidade = $"Gravidade {Random.Shared.Next()}",
+                };
+
+                yield return sinistro;
+            }
         }
     }
 }

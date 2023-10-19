@@ -8,9 +8,9 @@ namespace api
         public int TotalPaginas { get; set; }
         public List<T> Items { get; set; }
 
-        public ListaPaginada(List<T> items, int paginaIndex, int itemsPorPagina, int total)
+        public ListaPaginada(List<T> items, int pagina, int itemsPorPagina, int total)
         {
-            Pagina = paginaIndex;
+            Pagina = pagina;
             ItemsPorPagina = itemsPorPagina;
             Total = total;
             TotalPaginas = (int)Math.Ceiling(Total / (double)itemsPorPagina);
