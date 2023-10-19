@@ -14,6 +14,8 @@ namespace app.DI
             services.AddScoped<IUpsService, UpsService>();
             services.AddScoped<ISinistroService, SinistroService>();
             services.AddScoped<IRodoviaService, RodoviaService>();
+
+            services.AddControllers(o => o.Filters.Add(typeof(HandleExceptionFilter)));
         }
     }
 }

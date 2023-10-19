@@ -59,4 +59,15 @@ namespace api
         [Description("Distrito Federal")]
         DF
     }
+
+    public enum ErrorCodes
+    {
+        Unknown,
+        [Description("Erro ao realizar o cálculo")]
+        ErroNoCalculo,
+        [Description("Planilha com formato incompatível")]
+        PlanilhaFormatoIncompativel,
+        [Description("Dados já inseridos")]
+        DadosJaInseridos,
+    }
 }

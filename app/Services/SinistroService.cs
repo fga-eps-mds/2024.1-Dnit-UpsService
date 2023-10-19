@@ -6,6 +6,7 @@ using app.Entidades;
 using Microsoft.EntityFrameworkCore;
 using api;
 using api.Escolas;
+using app.Services;
 
 namespace Service
 {
@@ -82,12 +83,15 @@ namespace Service
                         }
                         catch (FormatException ex)
                         {
-                            throw new Exception("Planilha com formato incompatível.", ex);
+                            Console.Error.WriteLine(ex.Message);
+                            throw new ApiException(ErrorCodes.PlanilhaFormatoIncompativel, ex.Message);
                         }
                         catch (DbUpdateException ex)
                         {
-                            var mensagem = $"Dados já inseridos. Linha {numeroLinha}\nSinistro: {string.Join(';', linha)}";
-                            throw new Exception(mensagem, ex);
+                            var mensagem = $"Dados já inseridos. Linha {numeroLinha}\n" + 
+                                $"Sinistro: {string.Join(';', linha)}";
+                            Console.Error.WriteLine(ex.Message);
+                            throw new ApiException(ErrorCodes.DadosJaInseridos, mensagem);
                         }
                     }
                 }

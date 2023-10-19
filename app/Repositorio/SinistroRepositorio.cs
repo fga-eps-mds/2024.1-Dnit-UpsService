@@ -20,6 +20,7 @@ namespace Repositorio
         {
             var sin = new Sinistro
             {
+                Id = sinistro.Id,
                 Uf = sinistro.Uf,
                 Rodovia = sinistro.Rodovia,
                 Km = sinistro.Km,
