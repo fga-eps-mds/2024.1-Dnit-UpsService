@@ -1,3 +1,5 @@
+using api;
+using api.Escolas;
 using Entidades;
 
 namespace Service.Interfaces
@@ -6,6 +8,6 @@ namespace Service.Interfaces
     {
         public bool SuperaTamanhoMaximo(MemoryStream planilha);
         public void CadastrarSinistroViaPlanilha(MemoryStream planilha);
-        public Task<IEnumerable<Sinistro>> ObterTodosAsync();
+        public Task<ListaPaginada<Sinistro>> ListarPaginadaAsync(PesquisaSinistroFiltro filtro);
     }
 }

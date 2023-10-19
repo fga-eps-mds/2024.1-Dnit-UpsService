@@ -5,6 +5,7 @@ using Entidades;
 using app.Entidades;
 using Microsoft.EntityFrameworkCore;
 using api;
+using api.Escolas;
 
 namespace Service
 {
@@ -32,7 +33,6 @@ namespace Service
             }
         }
 
-        // TODO: adicionar 'Async'
         public void CadastrarSinistroViaPlanilha(MemoryStream planilha)
         {
             int numeroLinha = 2;
@@ -94,9 +94,9 @@ namespace Service
             }
         }
 
-        public async Task<IEnumerable<Sinistro>> ObterTodosAsync()
+        public async Task<ListaPaginada<Sinistro>> ListarPaginadaAsync(PesquisaSinistroFiltro filtro)
         {
-            return await sinistroRepositorio.ObterTodosAsync();
+            return await sinistroRepositorio.ListarPaginadaAsync(filtro);
         }
     }
 }

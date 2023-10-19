@@ -1,3 +1,6 @@
+using api;
+using api.Escolas;
+using Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
 
@@ -18,10 +21,11 @@ namespace app.Controllers
         // Não segue o padrão de endpoints da classe pra manter
         // compatibilidade com o frontend.
         [HttpGet("/api/obter/sinistros")]
-        public async Task<IActionResult> ObterUpsAsync()
+        public async Task<ListaPaginada<Sinistro>> ObterUpsAsync([FromQuery] PesquisaSinistroFiltro filtro)
         {
-            var sinistros = await sinistroService.ObterTodosAsync();
-            return new OkObjectResult(sinistros);
+            var sinistros = await sinistroService.ListarPaginadaAsync(filtro);
+            Console.WriteLine(sinistros);
+            return sinistros;
         }
 
         [Consumes("multipart/form-data")]

@@ -1,4 +1,5 @@
-﻿using app.Entidades;
+﻿using api.Escolas;
+using app.Entidades;
 using Entidades;
 using Repositorio.Interfaces;
 using Service.Interfaces;

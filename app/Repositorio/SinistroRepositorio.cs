@@ -3,6 +3,7 @@ using app.Entidades;
 using Repositorio.Interfaces;
 using Entidades;
 using Microsoft.EntityFrameworkCore;
+using api.Escolas;
 
 namespace Repositorio
 {
@@ -39,9 +40,20 @@ namespace Repositorio
             return sin;
         }
 
+        public async Task<ListaPaginada<Sinistro>> ListarPaginadaAsync(PesquisaSinistroFiltro filtro)
+        {
+            var total = await db.Sinistros.CountAsync();
+            var sinistros = await db.Sinistros
+                .Skip(filtro.ItemsPorPagina * (filtro.Pagina - 1))
+                .Take(filtro.ItemsPorPagina)
+                .ToListAsync();
+            return new ListaPaginada<Sinistro>(sinistros, filtro.Pagina, filtro.ItemsPorPagina, total);
+        }
+
         public async Task<IEnumerable<Sinistro>> ObterTodosAsync()
         {
-            return await db.Sinistros.ToListAsync();
+            var sinistros = await db.Sinistros.ToListAsync();
+            return sinistros;
         }
     }
 }
