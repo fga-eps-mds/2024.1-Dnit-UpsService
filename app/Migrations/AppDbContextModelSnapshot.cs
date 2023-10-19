@@ -24,11 +24,9 @@ namespace app.Migrations
 
             modelBuilder.Entity("Entidades.Rodovia", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<int>("AnoApuracao")
                         .HasColumnType("integer");
@@ -77,9 +75,8 @@ namespace app.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Uf")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Uf")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -138,7 +135,7 @@ namespace app.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<int?>("Uf")
+                    b.Property<int>("Uf")
                         .HasColumnType("integer");
 
                     b.Property<int?>("Ups")

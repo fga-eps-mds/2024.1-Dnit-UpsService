@@ -4,7 +4,7 @@
     {
 
         public int AnoApuracao { get; set; }
-        public string SiglaUf { get; set; }
+        public UF Uf { get; set; }
         public int NumeroRodovia { get; set; }
         public string TipoTrecho { get; set; }
         public string CodigoSNV { get; set; }

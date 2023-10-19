@@ -3,7 +3,7 @@
 public class SinistroDTO
 {
     public int Id { get; set; }
-    public UF? Uf { get; set; }
+    public UF Uf { get; set; }
     public int Rodovia { get; set; }
     public double Km { get; set; }
     public string? Snv { get; set; }

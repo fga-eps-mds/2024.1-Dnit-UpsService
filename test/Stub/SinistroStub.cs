@@ -1,3 +1,4 @@
+using api;
 using Entidades;
 
 namespace test.Stub
@@ -68,7 +69,7 @@ namespace test.Stub
             return new Sinistro
             {
                 Id = 5000000,
-                Uf = "DF",
+                Uf = UF.DF,
                 Rodovia = 123,
                 Km = 123,
                 Snv = "316BPI0550",

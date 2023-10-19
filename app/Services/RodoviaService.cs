@@ -52,7 +52,7 @@ namespace Service
                 var rodovia = new RodoviaDTO
                 {
                     AnoApuracao = int.Parse(linha[0]),
-                    SiglaUf = linha[1],
+                    Uf = Enum.Parse<UF>(linha[1]),
                     NumeroRodovia = int.Parse(linha[2]),
                     TipoTrecho = linha[3],
                     CodigoSNV = linha[4],

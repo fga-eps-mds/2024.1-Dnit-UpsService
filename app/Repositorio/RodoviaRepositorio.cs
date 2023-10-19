@@ -18,8 +18,9 @@ namespace Repositorio
         {
             var rod = new Rodovia
             {
+                Id = Guid.NewGuid(),
+                Uf = rodovia.Uf,
                 AnoApuracao = rodovia.AnoApuracao,
-                Uf = rodovia.SiglaUf,
                 NumeroRodovia = rodovia.NumeroRodovia,
                 TipoTrecho = rodovia.TipoTrecho,
                 CodigoSNV = rodovia.CodigoSNV,

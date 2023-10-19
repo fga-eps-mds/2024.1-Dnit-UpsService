@@ -9,7 +9,8 @@ namespace Entidades
         [Key]
         public int Id { get; set; }
 
-        public UF? Uf { get; set; }
+        [Required]
+        public UF Uf { get; set; }
 
         [Required]
         public int Rodovia { get; set; }
