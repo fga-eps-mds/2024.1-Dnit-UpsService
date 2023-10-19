@@ -58,11 +58,10 @@ namespace Service
                                 primeiralinha = true;
                                 continue;
                             }
-
                             sinistro = new()
                             {
                                 Id = int.Parse(linha[0]),
-                                SiglaUF = linha[1],
+                                Uf = Enum.Parse<UF>(linha[1]),
                                 Rodovia = int.Parse(linha[2]),
                                 Km = double.Parse(linha[3]),
                                 Snv = linha[4],

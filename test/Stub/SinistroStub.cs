@@ -68,7 +68,7 @@ namespace test.Stub
             return new Sinistro
             {
                 Id = 5000000,
-                SiglaUF = "DF",
+                Uf = "DF",
                 Rodovia = 123,
                 Km = 123,
                 Snv = "316BPI0550",

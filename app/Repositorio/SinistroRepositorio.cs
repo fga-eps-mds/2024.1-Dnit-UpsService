@@ -19,7 +19,7 @@ namespace Repositorio
         {
             var sin = new Sinistro
             {
-                SiglaUF = sinistro.SiglaUF,
+                Uf = sinistro.Uf,
                 Rodovia = sinistro.Rodovia,
                 Km = sinistro.Km,
                 Snv = sinistro.Snv,
