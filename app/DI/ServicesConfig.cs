@@ -1,4 +1,5 @@
-﻿using service;
+﻿using auth;
+using service;
 using service.Interfaces;
 
 namespace app.DI
@@ -10,6 +11,8 @@ namespace app.DI
             services.AddScoped<IUpsService, UpsService>();
             services.AddScoped<ISinistroService, SinistroService>();
             services.AddScoped<IRodoviaService, RodoviaService>();
+
+            services.AddAuth(configuration);
         }
     }
 }
