@@ -83,14 +83,12 @@ namespace Service
                         }
                         catch (FormatException ex)
                         {
-                            Console.Error.WriteLine(ex.Message);
-                            throw new ApiException(ErrorCodes.PlanilhaFormatoIncompativel, ex.Message);
+                            throw new ApiException(ErrorCodes.PlanilhaFormatoIncompativel);
                         }
                         catch (DbUpdateException ex)
                         {
                             var mensagem = $"Dados já inseridos. Linha {numeroLinha}\n" + 
                                 $"Sinistro: {string.Join(';', linha)}";
-                            Console.Error.WriteLine(ex.Message);
                             throw new ApiException(ErrorCodes.DadosJaInseridos, mensagem);
                         }
                     }

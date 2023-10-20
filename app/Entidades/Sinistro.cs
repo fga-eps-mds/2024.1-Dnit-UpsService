@@ -62,22 +62,18 @@ namespace Entidades
             if (Mortos > 0)
             {
                 Ups = 13;
-                return;
             }
             else if (Tipo == "Atropelamento" && Feridos > 0)
             {
                 Ups = 6;
-                return;
             }
             else if (Feridos > 0)
             {
                 Ups = 4;
-                return;
             }
             else
             {
                 Ups = 1;
-                return;
             }
         }
     }
