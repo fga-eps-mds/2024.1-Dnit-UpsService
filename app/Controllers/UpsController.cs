@@ -23,9 +23,12 @@ namespace app.Controllers
         }
 
         [HttpGet("calcular/ups/escola")]
-        public async Task<IActionResult> CalcularUpsEscolaAsync([FromQuery] Escola escola)
+        public async Task<IActionResult> CalcularUpsEscolaAsync([FromQuery] Escola escola, [FromQuery] double? raioKm)
         {
-            var upsDetalhado = await upsService.CalcularUpsEscolaAsync(escola);
+            double raio = 2.0;
+            if (raioKm != null)
+                raio = (double) raioKm;
+            var upsDetalhado = await upsService.CalcularUpsEscolaAsync(escola, raio);
             return new OkObjectResult(upsDetalhado);
         }
     }

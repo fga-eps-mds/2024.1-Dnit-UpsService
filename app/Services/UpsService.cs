@@ -28,12 +28,12 @@ namespace Service
             await db.SaveChangesAsync();
         }
 
-        public async Task<UpsDetalhado> CalcularUpsEscolaAsync(Escola escola)
+        public async Task<UpsDetalhado> CalcularUpsEscolaAsync(Escola escola, double raioKm)
         {
             var sinistros = await sinistroRepositorio.ObterTodosAsync();
             var upsDetalhado = new UpsDetalhado();
 
-            double raio = 2.0; //raio esta em quilometro
+            // double raio = 2.0; //raio esta em quilometro
 
             Dictionary<int, int> upsPorAno = new()
             {
@@ -46,10 +46,13 @@ namespace Service
 
             foreach (var sinistro in sinistros)
             {
-                if (CalcularDistancia(sinistro.Latitude, sinistro.Longitude, escola.Latitude, escola.Longitude) <= raio)
+                if (CalcularDistancia(sinistro.Latitude, sinistro.Longitude, escola.Latitude, escola.Longitude) <= raioKm)
                 {
                     if (upsPorAno.ContainsKey(sinistro.Data.Year)) {
                         upsPorAno[sinistro.Data.Year] += sinistro.Ups ?? 0;
+                    }
+                    else {
+                        upsPorAno.Add(sinistro.Data.Year, sinistro.Ups ?? 0);
                     }
                 }
             }

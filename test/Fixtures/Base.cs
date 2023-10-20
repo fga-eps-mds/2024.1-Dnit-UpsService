@@ -26,10 +26,12 @@ namespace test.Fixtures
             services.AddScoped<IRodoviaRepositorio, RodoviaRepositorio>();
 
             services.AddScoped<ISinistroService, SinistroService>();
+            services.AddScoped<IUpsService, UpsService>();
             services.AddScoped<IRodoviaService, RodoviaService>();
 
             services.AddScoped<SinistroController>();
             services.AddScoped<RodoviaController>();
+            services.AddScoped<UpsController>();
         }
 
         protected override ValueTask DisposeAsyncCore() => new();
