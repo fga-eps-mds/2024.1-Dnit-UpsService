@@ -7,6 +7,9 @@ using Xunit.Microsoft.DependencyInjection.Abstracts;
 using app.Entidades;
 using Repositorio;
 using Repositorio.Interfaces;
+using app.Controllers;
+using Service.Interfaces;
+using Service;
 
 namespace test.Fixtures
 {
@@ -21,6 +24,10 @@ namespace test.Fixtures
 
             services.AddScoped<ISinistroRepositorio, SinistroRepositorio>();
             services.AddScoped<IRodoviaRepositorio, RodoviaRepositorio>();
+
+            services.AddScoped<ISinistroService, SinistroService>();
+
+            services.AddScoped<SinistroController>();
         }
 
         protected override ValueTask DisposeAsyncCore() => new();

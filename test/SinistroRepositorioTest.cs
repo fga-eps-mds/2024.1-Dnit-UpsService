@@ -103,7 +103,7 @@ namespace test
             Assert.Empty(lista.Items);
         }
 
-        public new void Dispose()
+        internal new void Dispose()
         {
             db.Clear();
         }

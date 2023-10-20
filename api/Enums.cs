@@ -65,6 +65,12 @@ namespace api
         Unknown,
         [Description("Erro ao realizar o cálculo")]
         ErroNoCalculo,
+        [Description("Tamanho máximo de arquivo ultrapassado")]
+        TamanhoArquivoExcedido,
+        [Description("Arquivo formato inválido")]
+        ArquivoFormatoInvalido,
+        [Description("Arquivo vazio")]
+        ArquivoVazio,
         [Description("Planilha com formato incompatível")]
         PlanilhaFormatoIncompativel,
         [Description("Dados já inseridos")]
