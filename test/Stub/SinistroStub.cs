@@ -12,7 +12,7 @@ namespace test.Stub
             {
                 Id = Random.Shared.Next(),
                 Gravidade = "Sem v�tima",
-                Tipo = "Colis�o lateral",
+                Tipo = "Colisão lateral",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 0,
@@ -27,7 +27,7 @@ namespace test.Stub
             {
                 Id = Random.Shared.Next(),
                 Gravidade = "Com ferido",
-                Tipo = "Colis�o transversal",
+                Tipo = "Colisão transversal",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 0,

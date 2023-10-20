@@ -58,7 +58,6 @@ Consulte a documentação da API em http://localhost:7085/swagger/.
 
 Para clonar o repostório, basta utilizar o comando abaixo:
 
-##### UpsService
 ```
 git clone https://github.com/fga-eps-mds/2023.1-Dnit-UpsService.git
 ```

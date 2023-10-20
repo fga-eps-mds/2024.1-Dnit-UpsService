@@ -38,6 +38,7 @@
   <ItemGroup>
     <SonarQubeSetting Include="sonar.exclusions">
       <Value>**\Migrations\**</Value>
+      <Value>DI\**</Value>
     </SonarQubeSetting>
   </ItemGroup>
 </Project>
