@@ -6,70 +6,70 @@ namespace test.Stub
 {
     public class SinistroStub
     {
-        public Sinistro Ups1()
+        public static Sinistro Ups1()
         {
             return new Sinistro
             {
-                Id = 146359,
+                Id = Random.Shared.Next(),
                 Gravidade = "Sem v�tima",
                 Tipo = "Colis�o lateral",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 0,
                 Feridos = 0,
-                Data = DateTime.Now
+                Data = new DateTime(2018, 1, 1)
             };
         }
 
-        public Sinistro Ups4()
+        public static Sinistro Ups4()
         {
             return new Sinistro
             {
-                Id = 146409,
+                Id = Random.Shared.Next(),
                 Gravidade = "Com ferido",
                 Tipo = "Colis�o transversal",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 0,
                 Feridos = 1,
-                Data = DateTime.Now
+                Data = new DateTime(2019, 1, 1)
             };
         }
 
-        public Sinistro Ups6()
+        public static Sinistro Ups6()
         {
             return new Sinistro
             {
-                Id = 146409,
+                Id = Random.Shared.Next(),
                 Gravidade = "Com ferido",
                 Tipo = "Atropelamento",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 0,
                 Feridos = 1,
-                Data = DateTime.Now
+                Data = new DateTime(2020, 1, 1)
             };
         }
 
-        public Sinistro Ups13()
+        public static Sinistro Ups13()
         {
             return new Sinistro
             {
-                Id = 146409,
+                Id = Random.Shared.Next(),
                 Gravidade = "Com morto",
                 Tipo = "Atropelamento",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 1,
                 Feridos = 0,
-                Data = DateTime.Now
+                Data = new DateTime(2021, 1, 1)
             };
         }
-        public Sinistro ObterSinistroDTO()
+        public static Sinistro ObterSinistroDTO()
         {
             return new Sinistro
             {
-                Id = 5000000,
+                Id = Random.Shared.Next(),
                 Uf = UF.DF,
                 Rodovia = 123,
                 Km = 123,

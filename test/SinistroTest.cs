@@ -9,53 +9,41 @@ namespace test
         [Fact]
         public void CalcularUps_QuandoMetodoForChamado_DeveCalcularUps1()
         {
-            int UPS = 1;
-            SinistroStub sinistroStub = new();
+            var sinistro = SinistroStub.Ups1();
 
-            Sinistro sinistroComUps1 = sinistroStub.Ups1();
+            sinistro.CalcularUps();
 
-            sinistroComUps1.CalcularUps();
-
-            Assert.Equal(UPS, sinistroComUps1.Ups);
+            Assert.True(1 == sinistro.Ups);
         }
 
         [Fact]
         public void CalcularUps_QuandoMetodoForChamado_DeveCalcularUps4()
         {
-            int UPS = 4;
-            SinistroStub sinistroStub = new();
+            var sinistro = SinistroStub.Ups4();
 
-            Sinistro sinistroComUps1 = sinistroStub.Ups4();
+            sinistro.CalcularUps();
 
-            sinistroComUps1.CalcularUps();
-
-            Assert.Equal(UPS, sinistroComUps1.Ups);
+            Assert.True(4 == sinistro.Ups);
         }
 
         [Fact]
         public void CalcularUps_QuandoMetodoForChamado_DeveCalcularUps6()
         {
-            int UPS = 6;
-            SinistroStub sinistroStub = new();
+            var sinistro = SinistroStub.Ups6();
 
-            Sinistro sinistroComUps1 = sinistroStub.Ups6();
+            sinistro.CalcularUps();
 
-            sinistroComUps1.CalcularUps();
-
-            Assert.Equal(UPS, sinistroComUps1.Ups);
+            Assert.True(6 == sinistro.Ups);
         }
 
         [Fact]
         public void CalcularUps_QuandoMetodoForChamado_DeveCalcularUps13()
         {
-            int UPS = 13;
-            SinistroStub sinistroStub = new();
+            var sinistro = SinistroStub.Ups13();
 
-            Sinistro sinistroComUps1 = sinistroStub.Ups13();
+            sinistro.CalcularUps();
 
-            sinistroComUps1.CalcularUps();
-
-            Assert.Equal(UPS, sinistroComUps1.Ups);
+            Assert.True(13 == sinistro.Ups);
         }
     }
 }
