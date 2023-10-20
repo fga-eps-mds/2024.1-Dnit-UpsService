@@ -11,13 +11,11 @@ namespace test
 {
     public class SinistroControllerTest : TestBed<Base>
     {
-        readonly AppDbContext db;
         readonly SinistroController sinistroController;
         readonly string caminhoStub = Path.Join("..", "..", "..", "..", "test", "Stub");
 
         public SinistroControllerTest(ITestOutputHelper testOutputHelper, Base fixture) : base(testOutputHelper, fixture)
         {
-            db = fixture.GetService<AppDbContext>(testOutputHelper)!;
             sinistroController = fixture.GetService<SinistroController>(testOutputHelper)!;
         }
 
@@ -84,11 +82,6 @@ namespace test
             var resultado = await sinistroController.EnviarPlanilhaAsync(arquivo);
 
             Assert.IsType<OkResult>(resultado);
-        }
-
-        internal new void Dispose()
-        {
-            db.Clear();
         }
     }
 }
