@@ -9,16 +9,17 @@ using Xunit.Microsoft.DependencyInjection.Abstracts;
 
 namespace test
 {
-    public class SinistroControllerTest : TestBed<Base>
+    public class RodoviaControllerTest : TestBed<Base>
     {
         readonly AppDbContext db;
-        readonly SinistroController sinistroController;
+        readonly RodoviaController rodoviaController;
+
         readonly string caminhoStub = Path.Join("..", "..", "..", "..", "test", "Stub");
 
-        public SinistroControllerTest(ITestOutputHelper testOutputHelper, Base fixture) : base(testOutputHelper, fixture)
+        public RodoviaControllerTest(ITestOutputHelper testOutputHelper, Base fixture) : base(testOutputHelper, fixture)
         {
             db = fixture.GetService<AppDbContext>(testOutputHelper)!;
-            sinistroController = fixture.GetService<SinistroController>(testOutputHelper)!;
+            rodoviaController = fixture.GetService<RodoviaController>(testOutputHelper)!;
         }
 
         [Fact]
@@ -31,7 +32,7 @@ namespace test
             arquivo.Headers = new HeaderDictionary();
             arquivo.Headers.ContentType = "application/json";
 
-            var resultado = await sinistroController.EnviarPlanilhaAsync(arquivo);
+            var resultado = await rodoviaController.EnviarPlanilhaAsync(arquivo);
             var message = (resultado as BadRequestObjectResult)?.Value as string;
 
             Assert.IsType<BadRequestObjectResult>(resultado);
@@ -41,14 +42,14 @@ namespace test
         [Fact]
         public async Task EnviarPlanilhaAsync_QuandoArquivoMuitoGrande_RetornaBadRequest()
         {
-            var caminhoArquivo = Path.Join(caminhoStub, "ExemploSinistroTamanhoMaximo.csv");
+            var caminhoArquivo = Path.Join(caminhoStub, "planilha_tamanho_max.csv");
             var conteudo = File.ReadAllBytes(caminhoArquivo);
             var memoryStream = new MemoryStream(conteudo);
             var arquivo = new FormFile(memoryStream, 0, conteudo.Length, "planilha", "planilha.csv");
             arquivo.Headers = new HeaderDictionary();
             arquivo.Headers.ContentType = "text/csv";
 
-            var resultado = await sinistroController.EnviarPlanilhaAsync(arquivo);
+            var resultado = await rodoviaController.EnviarPlanilhaAsync(arquivo);
             var message = (resultado as BadRequestObjectResult)?.Value as string;
 
             Assert.IsType<BadRequestObjectResult>(resultado);
@@ -64,7 +65,7 @@ namespace test
             arquivo.Headers = new HeaderDictionary();
             arquivo.Headers.ContentType = "text/csv";
 
-            var resultado = await sinistroController.EnviarPlanilhaAsync(arquivo);
+            var resultado = await rodoviaController.EnviarPlanilhaAsync(arquivo);
             var message = (resultado as BadRequestObjectResult)?.Value as string;
 
             Assert.IsType<BadRequestObjectResult>(resultado);
@@ -74,14 +75,14 @@ namespace test
         [Fact]
         public async Task EnviarPlanilhaAsync_QuandoArquivoNormal_RetornaOk()
         {
-            var caminhoArquivo = Path.Join(caminhoStub, "ExemploSin.csv");
+            var caminhoArquivo = Path.Join(caminhoStub, "ExemploRodovia.csv");
             var conteudo = File.ReadAllBytes(caminhoArquivo);
             var memoryStream = new MemoryStream(conteudo);
             var arquivo = new FormFile(memoryStream, 0, conteudo.Length, "planilha", "planilha.csv");
             arquivo.Headers = new HeaderDictionary();
             arquivo.Headers.ContentType = "text/csv";
 
-            var resultado = await sinistroController.EnviarPlanilhaAsync(arquivo);
+            var resultado = await rodoviaController.EnviarPlanilhaAsync(arquivo);
 
             Assert.IsType<OkResult>(resultado);
         }
