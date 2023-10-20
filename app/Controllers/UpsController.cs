@@ -1,7 +1,10 @@
-﻿using dominio;
+﻿using app.Services;
+using dominio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using repositorio.Interfaces;
 using service.Interfaces;
+using System.ComponentModel;
 
 namespace app.Controllers
 {
@@ -10,10 +13,26 @@ namespace app.Controllers
     public class UpsController : ControllerBase
     {
         private readonly IUpsService upsService;
+        private readonly AuthService authService;
 
-        public UpsController(IUpsService upsService)
+        public UpsController(IUpsService upsService, AuthService authService)
         {
             this.upsService = upsService;
+            this.authService = authService;
+        }
+
+        public enum Permissao
+        {
+            [Description("Calcular o UPS")]
+            CalcularUps = 5000,
+        }
+
+        [HttpGet("teste")]
+        [Authorize]
+        public int Teste()
+        {
+            authService.Require(User, Permissao.CalcularUps);
+            return 42;
         }
 
         [HttpGet("obter/sinistros")]
