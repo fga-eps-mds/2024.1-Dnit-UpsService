@@ -1,23 +1,27 @@
 using Moq;
-using service;
-using service.Interfaces;
-using repositorio.Interfaces;
-using dominio;
+using Service;
+using Repositorio.Interfaces;
+using app.Entidades;
+using Microsoft.EntityFrameworkCore;
+using api;
 
 namespace test.SinistroServiceTests
 {
     public class SinistroServiceTest
     {
+        private readonly DbContextOptions<AppDbContext> options = new();
+        private readonly Mock<AppDbContext> mockDb;
         private readonly SinistroService sinistroService;
         private readonly Mock<ISinistroRepositorio> mockSinistroRepositorio;
-        private string caminhoDoArquivo;
         private readonly string caminhoTests = Path.Join("..", "..", "..", "..", "test");
+        private string caminhoDoArquivo;
 
         public SinistroServiceTest()
         {
-            caminhoDoArquivo = Path.Join(caminhoTests, "Stub", "ExemploSin.csv");
             mockSinistroRepositorio = new();
-            sinistroService = new SinistroService(mockSinistroRepositorio.Object);
+            mockDb = new(options);
+            sinistroService = new SinistroService(mockSinistroRepositorio.Object, mockDb.Object);
+            caminhoDoArquivo = Path.Join(caminhoTests, "Stub", "ExemploSin.csv");
         }
 
         [Fact]
@@ -32,7 +36,7 @@ namespace test.SinistroServiceTests
             var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
 
             sinistroService.CadastrarSinistroViaPlanilha(memoryStream);
-            mockSinistroRepositorio.Verify(mock => mock.CadastrarSinistro(It.IsAny<Sinistro>()), Times.Exactly(3));
+            mockSinistroRepositorio.Verify(mock => mock.Criar(It.IsAny<SinistroDTO>()), Times.Exactly(3));
         }
 
         [Fact]
@@ -41,21 +45,16 @@ namespace test.SinistroServiceTests
             var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
 
             sinistroService.CadastrarSinistroViaPlanilha(memoryStream);
-            mockSinistroRepositorio.Verify(mock => mock.CadastrarSinistro(It.IsAny<Sinistro>()), Times.Exactly(3));
+            mockSinistroRepositorio.Verify(mock => mock.Criar(It.IsAny<SinistroDTO>()), Times.Exactly(3));
         }
 
         [Fact]
         public void SuperaTamanhoMaximo_QuandoPlanilhaComTamanhoMaiorQueOMaximoForPassada_DeveRetornarTrue()
         {
-            Mock<ISinistroRepositorio> mockSinistroRepositorio = new();
-            ISinistroService sinistroService = new SinistroService(mockSinistroRepositorio.Object);
-
             caminhoDoArquivo = Path.Join(caminhoTests, "Stub", "planilhaExemploSinistro.csv");
 
-            MemoryStream memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
-
+            var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
             bool resultado = sinistroService.SuperaTamanhoMaximo(memoryStream);
-
             Assert.True(resultado);
         }
     }

@@ -27,8 +27,6 @@ builder.Services.AddConfigServices(builder.Configuration);
 
 builder.Services.AddConfigRepositorios();
 
-builder.Services.AddContexto(builder.Configuration);
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",

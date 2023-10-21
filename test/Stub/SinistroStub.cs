@@ -1,74 +1,76 @@
-using dominio;
+using api;
+using Entidades;
+using Stub;
 
 namespace test.Stub
 {
     public class SinistroStub
     {
-        public Sinistro Ups1()
+        public static Sinistro Ups1()
         {
             return new Sinistro
             {
-                Id = 146359,
-                Gravidade = "Sem vítima",
-                Tipo = "Colisão lateral",
+                Id = Random.Shared.Next(),
+                Gravidade = "Sem vï¿½tima",
+                Tipo = "ColisÃ£o lateral",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 0,
                 Feridos = 0,
-                Data = DateTime.Now
+                Data = new DateTime(2018, 1, 1)
             };
         }
 
-        public Sinistro Ups4()
+        public static Sinistro Ups4()
         {
             return new Sinistro
             {
-                Id = 146409,
+                Id = Random.Shared.Next(),
                 Gravidade = "Com ferido",
-                Tipo = "Colisão transversal",
+                Tipo = "ColisÃ£o transversal",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 0,
                 Feridos = 1,
-                Data = DateTime.Now
+                Data = new DateTime(2019, 1, 1)
             };
         }
 
-        public Sinistro Ups6()
+        public static Sinistro Ups6()
         {
             return new Sinistro
             {
-                Id = 146409,
+                Id = Random.Shared.Next(),
                 Gravidade = "Com ferido",
                 Tipo = "Atropelamento",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 0,
                 Feridos = 1,
-                Data = DateTime.Now
+                Data = new DateTime(2020, 1, 1)
             };
         }
 
-        public Sinistro Ups13()
+        public static Sinistro Ups13()
         {
             return new Sinistro
             {
-                Id = 146409,
+                Id = Random.Shared.Next(),
                 Gravidade = "Com morto",
                 Tipo = "Atropelamento",
                 Latitude = -20.36999506,
                 Longitude = -40.44402927,
                 Mortos = 1,
                 Feridos = 0,
-                Data = DateTime.Now
+                Data = new DateTime(2021, 1, 1)
             };
         }
-        public Sinistro ObterSinistroDTO()
+        public static Sinistro ObterSinistroDTO()
         {
             return new Sinistro
             {
-                Id = 5000000,
-                SiglaUF = "DF",
+                Id = Random.Shared.Next(),
+                Uf = UF.DF,
                 Rodovia = 123,
                 Km = 123,
                 Snv = "316BPI0550",
@@ -76,7 +78,7 @@ namespace test.Stub
                 Solo = "Urbano",
                 Data = DateTime.Now,
                 Tipo = "Tombamento",
-                Causa = "Ingestão de álcool",
+                Causa = "Ingestï¿½o de ï¿½lcool",
                 Gravidade = "Com morto",
                 Feridos = 100,
                 Mortos = 100,
@@ -84,6 +86,34 @@ namespace test.Stub
                 Latitude = 2.228445,
                 Longitude = 44.1347544
             };
+        }
+
+        public static IEnumerable<Sinistro> ListarSinistros()
+        {
+            while (true)
+            {
+                var sinistro = new Sinistro
+                {
+                    Id = Random.Shared.Next(),
+                    Uf = Enum.GetValues<UF>().TakeRandom().FirstOrDefault(),
+                    Ups = Random.Shared.Next() % 16,
+                    Rodovia = 1,
+                    Km = 1,
+                    Feridos = Random.Shared.Next() % 30,
+                    Mortos = Random.Shared.Next() % 10,
+                    Latitude = Random.Shared.NextDouble() * 180 - 90,   // [-90, +90]
+                    Longitude = Random.Shared.NextDouble() * 360 - 180, // [-180, +180]
+                    Data = DateTimeOffset.Now,
+                    Causa = $"Causa nÃºmero {Random.Shared.Next()}",
+                    Snv = $"Snv {Random.Shared.Next()}",
+                    Sentido = $"Sentido {Random.Shared.Next()}",
+                    Solo = $"Solo {Random.Shared.Next()}",
+                    Tipo = $"Tipo {Random.Shared.Next()}",
+                    Gravidade = $"Gravidade {Random.Shared.Next()}",
+                };
+
+                yield return sinistro;
+            }
         }
     }
 }

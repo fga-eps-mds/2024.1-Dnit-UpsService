@@ -1,10 +1,8 @@
-﻿using app.Services;
-using dominio;
+using app.Services;
 using Microsoft.AspNetCore.Authorization;
+using Entidades;
 using Microsoft.AspNetCore.Mvc;
-using repositorio.Interfaces;
-using service.Interfaces;
-using System.ComponentModel;
+using Service.Interfaces;
 
 namespace app.Controllers
 {
@@ -21,31 +19,24 @@ namespace app.Controllers
             this.authService = authService;
         }
 
-        [HttpGet("obter/sinistros")]
-        [Authorize]
-        public IActionResult ObterUps()
-        {
-            authService.Require(User, Permissao.SinistroVisualizar);
-            IEnumerable<Sinistro> sinistros = upsService.ObterSinistros();
-            return new OkObjectResult(sinistros);
-        }
-
         [HttpPost("calcular/ups/sinistros")]
         [Authorize]
-        public IActionResult CalcularUpsSinistros()
+        public async Task<IActionResult> CalcularUpsSinistrosAsync()
         {
             authService.Require(User, Permissao.UpsCalcularSinistro);
-            upsService.CalcularUpsEmMassa();
-
+            await upsService.CalcularUpsEmMassaAsync();
             return Ok();
         }
 
         [HttpGet("calcular/ups/escola")]
         [Authorize]
-        public IActionResult CalcularUpsEscola([FromQuery] Escola escola)
+        public async Task<IActionResult> CalcularUpsEscolaAsync([FromQuery] Escola escola, [FromQuery] double? raioKm)
         {
             authService.Require(User, Permissao.UpsCalcularEscola);
-            UpsDetalhado upsDetalhado = upsService.CalcularUpsEscola(escola);
+            double raio = 2.0;
+            if (raioKm != null)
+                raio = (double) raioKm;
+            var upsDetalhado = await upsService.CalcularUpsEscolaAsync(escola, raio);
             return new OkObjectResult(upsDetalhado);
         }
     }
