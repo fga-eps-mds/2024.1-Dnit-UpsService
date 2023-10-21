@@ -4,7 +4,10 @@ using service;
 using Microsoft.AspNetCore.Mvc;
 using service.Interfaces;
 using System;
+using System.ComponentModel;
 using System.IO;
+using app.Services;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace app.Controllers
@@ -16,18 +19,21 @@ namespace app.Controllers
     {
 
         private readonly ISinistroService sinistroService;
-
-        public SinistroController(ISinistroService sinistroService)
+        private readonly AuthService authService;
+        
+        public SinistroController(ISinistroService sinistroService, AuthService authService)
         {
             this.sinistroService = sinistroService;
+            this.authService = authService;
         }
-
+        
+        
         [Consumes("multipart/form-data")]
         [HttpPost("cadastrarSinistroPlanilha")]
-
+        [Authorize]
         public async Task<IActionResult> EnviarPlanilha(IFormFile arquivo)
         {
-
+            authService.Require(User, Permissao.SinistroCadastrar);
             try
             {
                 if (arquivo == null || arquivo.Length == 0)

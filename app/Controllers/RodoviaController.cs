@@ -4,7 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using service;
 using service.Interfaces;
 using System;
+using System.ComponentModel;
 using System.IO;
+using System.Text.Json.Serialization;
+using app.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace app.Controllers
 {
@@ -13,16 +17,20 @@ namespace app.Controllers
     public class RodoviaController : ControllerBase
     {
         private readonly IRodoviaService rodoviaService;
-
-        public RodoviaController(IRodoviaService rodoviaService)
+        private readonly AuthService authService;
+        
+        public RodoviaController(IRodoviaService rodoviaService, AuthService authService)
         {
             this.rodoviaService = rodoviaService;
+            this.authService = authService;
         }
-
+        
         [Consumes("multipart/form-data")]
         [HttpPost("cadastrarRodoviaPlanilha")]
+        [Authorize]
         public async Task<IActionResult> EnviarPlanilha(IFormFile arquivo)
         {
+            authService.Require(User, Permissao.RodoviaCadastrar);
             try
             {
                 if (arquivo == null || arquivo.Length == 0)
