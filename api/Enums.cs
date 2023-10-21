@@ -84,15 +84,12 @@ namespace api
             
         [Description("Caluclar UPS de escolas")]
         UpsCalcularEscola = 5001,
-            
-        [Description("Visualizar sinistros")]
-        SinistroVisualizar = 5002,
     
         [Description("Cadastrar rodovia")]
-        RodoviaCadastrar = 5003,
+        RodoviaCadastrar = 5002,
     
         [Description("Cadastrar sinistro")]
-        SinistroCadastrar = 5004,
+        SinistroCadastrar = 5003,
     }
 
 }
