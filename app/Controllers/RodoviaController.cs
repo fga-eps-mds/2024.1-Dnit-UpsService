@@ -1,10 +1,7 @@
-using dominio;
-using Microsoft.AspNetCore.Http;
+using api;
+using app.Services;
 using Microsoft.AspNetCore.Mvc;
-using service;
-using service.Interfaces;
-using System;
-using System.IO;
+using Service.Interfaces;
 
 namespace app.Controllers
 {
@@ -21,13 +18,15 @@ namespace app.Controllers
 
         [Consumes("multipart/form-data")]
         [HttpPost("cadastrarRodoviaPlanilha")]
-        public async Task<IActionResult> EnviarPlanilha(IFormFile arquivo)
+        public async Task<IActionResult> EnviarPlanilhaAsync(IFormFile arquivo)
         {
             try
             {
                 if (arquivo == null || arquivo.Length == 0)
-                    return BadRequest("Nenhum arquivo enviado.");
+                    throw new ApiException(ErrorCodes.ArquivoVazio);
 
+                if (arquivo.ContentType.ToLower() != "text/csv")
+                    throw new ApiException(ErrorCodes.ArquivoFormatoInvalido, "Formato deve CSV");
 
                 using (var memoryStream = new MemoryStream())
                 {
@@ -35,9 +34,7 @@ namespace app.Controllers
                     memoryStream.Seek(0, SeekOrigin.Begin);
 
                     if (rodoviaService.SuperaTamanhoMaximo(memoryStream))
-                    {
-                        return StatusCode(406, "Tamanho máximo de arquivo ultrapassado!");
-                    }
+                        throw new ApiException(ErrorCodes.TamanhoArquivoExcedido);
                 }
 
                 using (var memoryStream = new MemoryStream())
@@ -49,11 +46,14 @@ namespace app.Controllers
 
                 return Ok();
             }
+            catch (ApiException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Arquivo incompatível");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Arquivo incompatï¿½vel");
             }
         }
-
     }
 }

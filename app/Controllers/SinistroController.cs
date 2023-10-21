@@ -1,20 +1,15 @@
-using dominio;
-using Microsoft.AspNetCore.Http;
-using service;
+using api;
+using app.Services;
 using Microsoft.AspNetCore.Mvc;
-using service.Interfaces;
-using System;
-using System.IO;
+using Service.Interfaces;
 
 
 namespace app.Controllers
 {
     [ApiController]
     [Route("api/sinistro")]
-
     public class SinistroController : ControllerBase
     {
-
         private readonly ISinistroService sinistroService;
 
         public SinistroController(ISinistroService sinistroService)
@@ -24,19 +19,15 @@ namespace app.Controllers
 
         [Consumes("multipart/form-data")]
         [HttpPost("cadastrarSinistroPlanilha")]
-
-        public async Task<IActionResult> EnviarPlanilha(IFormFile arquivo)
+        public async Task<IActionResult> EnviarPlanilhaAsync(IFormFile arquivo)
         {
-
             try
             {
                 if (arquivo == null || arquivo.Length == 0)
-                    return BadRequest("Nenhum arquivo enviado");
+                    throw new ApiException(ErrorCodes.ArquivoVazio);
 
                 if (arquivo.ContentType.ToLower() != "text/csv")
-                {
-                    return BadRequest("O arquivo deve estar no formato CSV.");
-                }
+                    throw new ApiException(ErrorCodes.ArquivoFormatoInvalido, "Formato deve CSV");
 
                 using (var memoryStream = new MemoryStream())
                 {
@@ -45,7 +36,7 @@ namespace app.Controllers
 
                     if (sinistroService.SuperaTamanhoMaximo(memoryStream))
                     {
-                        return StatusCode(406, "Tamanho máximo de arquivo ultrapassado!");
+                        throw new ApiException(ErrorCodes.TamanhoArquivoExcedido);
                     }
                 }
 
@@ -58,11 +49,10 @@ namespace app.Controllers
 
                 return Ok();
             }
-            catch (Exception ex)
+            catch (ApiException ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return BadRequest(ex.Message);
             }
         }
-
     }
 }

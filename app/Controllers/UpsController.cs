@@ -1,7 +1,6 @@
-﻿using dominio;
+﻿using Entidades;
 using Microsoft.AspNetCore.Mvc;
-using repositorio.Interfaces;
-using service.Interfaces;
+using Service.Interfaces;
 
 namespace app.Controllers
 {
@@ -16,26 +15,20 @@ namespace app.Controllers
             this.upsService = upsService;
         }
 
-        [HttpGet("obter/sinistros")]
-        public IActionResult ObterUps()
-        {
-            IEnumerable<Sinistro> sinistros = upsService.ObterSinistros();
-
-            return new OkObjectResult(sinistros);
-        }
-
         [HttpPost("calcular/ups/sinistros")]
-        public IActionResult CalcularUpsSinistros()
+        public async Task<IActionResult> CalcularUpsSinistrosAsync()
         {
-            upsService.CalcularUpsEmMassa();
-
+            await upsService.CalcularUpsEmMassaAsync();
             return Ok();
         }
 
         [HttpGet("calcular/ups/escola")]
-        public IActionResult CalcularUpsEscola([FromQuery] Escola escola)
+        public async Task<IActionResult> CalcularUpsEscolaAsync([FromQuery] Escola escola, [FromQuery] double? raioKm)
         {
-            UpsDetalhado upsDetalhado = upsService.CalcularUpsEscola(escola);
+            double raio = 2.0;
+            if (raioKm != null)
+                raio = (double) raioKm;
+            var upsDetalhado = await upsService.CalcularUpsEscolaAsync(escola, raio);
             return new OkObjectResult(upsDetalhado);
         }
     }
