@@ -81,15 +81,14 @@ namespace api
     {
         [Description("Calcular UPS de sinistros")]
         UpsCalcularSinistro = 5000,
-            
         [Description("Caluclar UPS de escolas")]
         UpsCalcularEscola = 5001,
     
         [Description("Cadastrar rodovia")]
-        RodoviaCadastrar = 5002,
+        RodoviaCadastrar = 6000,
     
         [Description("Cadastrar sinistro")]
-        SinistroCadastrar = 5003,
+        SinistroCadastrar = 7000,
     }
 
 }
