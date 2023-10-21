@@ -57,7 +57,7 @@ namespace app.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Arquivo incompat�vel");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Arquivo incompatível");
             }
         }
     }
