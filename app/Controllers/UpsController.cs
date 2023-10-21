@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
+using api;
 
 namespace app.Controllers
 {
