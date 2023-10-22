@@ -8,7 +8,7 @@ namespace app.Controllers
 {
     [ApiController]
     [Route("api/rodovia")]
-    public class RodoviaController : ControllerBase
+    public class RodoviaController : AppController
     {
         private readonly IRodoviaService rodoviaService;
         private readonly AuthService authService;
@@ -24,7 +24,7 @@ namespace app.Controllers
         [Authorize]
         public async Task<IActionResult> EnviarPlanilhaAsync(IFormFile arquivo)
         {
-            authService.Require(User, Permissao.RodoviaCadastrar);
+            authService.Require(Usuario, Permissao.RodoviaCadastrar);
             try
             {
                 if (arquivo == null || arquivo.Length == 0)

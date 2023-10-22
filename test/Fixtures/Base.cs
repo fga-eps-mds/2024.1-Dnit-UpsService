@@ -10,6 +10,7 @@ using Repositorio.Interfaces;
 using app.Controllers;
 using Service.Interfaces;
 using Service;
+using auth;
 
 namespace test.Fixtures
 {
@@ -32,13 +33,15 @@ namespace test.Fixtures
             services.AddScoped<SinistroController>();
             services.AddScoped<RodoviaController>();
             services.AddScoped<UpsController>();
+
+            services.AddAuth(configuration);
         }
 
         protected override ValueTask DisposeAsyncCore() => new();
 
         protected override IEnumerable<TestAppSettings> GetTestAppSettings()
         {
-            yield return new() { Filename = "appsettings.json", IsOptional = false };
+            yield return new() { Filename = "appsettings.Test.json", IsOptional = false };
         }
     }
 }

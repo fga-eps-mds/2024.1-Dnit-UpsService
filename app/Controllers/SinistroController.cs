@@ -9,7 +9,7 @@ namespace app.Controllers
 {
     [ApiController]
     [Route("api/sinistro")]
-    public class SinistroController : ControllerBase
+    public class SinistroController : AppController
     {
         private readonly ISinistroService sinistroService;
         private readonly AuthService authService;
@@ -26,7 +26,7 @@ namespace app.Controllers
         [Authorize]
         public async Task<IActionResult> EnviarPlanilhaAsync(IFormFile arquivo)
         {
-            authService.Require(User, Permissao.SinistroCadastrar);
+            authService.Require(Usuario, Permissao.SinistroCadastrar);
             try
             {
                 if (arquivo == null || arquivo.Length == 0)

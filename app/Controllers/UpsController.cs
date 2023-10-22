@@ -9,7 +9,7 @@ namespace app.Controllers
 {
     [ApiController]
     [Route("api")]
-    public class UpsController : ControllerBase
+    public class UpsController : AppController
     {
         private readonly IUpsService upsService;
         private readonly AuthService authService;
@@ -24,7 +24,7 @@ namespace app.Controllers
         [Authorize]
         public async Task<IActionResult> CalcularUpsSinistrosAsync()
         {
-            authService.Require(User, Permissao.UpsCalcularSinistro);
+            authService.Require(Usuario, Permissao.UpsCalcularSinistro);
             await upsService.CalcularUpsEmMassaAsync();
             return Ok();
         }
@@ -33,7 +33,7 @@ namespace app.Controllers
         [Authorize]
         public async Task<IActionResult> CalcularUpsEscolaAsync([FromQuery] Escola escola, [FromQuery] double? raioKm)
         {
-            authService.Require(User, Permissao.UpsCalcularEscola);
+            authService.Require(Usuario, Permissao.UpsCalcularEscola);
             double raio = 2.0;
             if (raioKm != null)
                 raio = (double) raioKm;
