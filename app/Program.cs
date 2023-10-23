@@ -1,5 +1,7 @@
 using app.DI;
+using app.Entidades;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,5 +54,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider
+        .GetRequiredService<AppDbContext>();
+
+    dbContext.Database.Migrate();
+}
 
 app.Run();
