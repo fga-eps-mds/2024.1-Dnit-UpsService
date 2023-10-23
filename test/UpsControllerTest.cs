@@ -46,18 +46,12 @@ namespace test
         [Fact]
         public async Task CalcularUpsEscolaAsync_QuandoNaoTiverPermissao_DeveBloquear()
         {
-            var sinistros = new Sinistro[]{
-                SinistroStub.Ups1(), SinistroStub.Ups4(),
-                SinistroStub.Ups6(), SinistroStub.Ups13() };
-            for (int i = 0; i < sinistros.Length; i++)
-                sinistros[i].CalcularUps();
-            db.Sinistros.AddRange(sinistros);
-            db.SaveChanges();
-
             AutenticarUsuario(upsController, permissoes: new());
-            await Assert.ThrowsAsync<AuthForbiddenException>(async () => await upsController.CalcularUpsEscolaAsync(
-                new Escola { Latitude = 15.3, Longitude = 1.0 },
-                double.PositiveInfinity
+
+            await Assert.ThrowsAsync<AuthForbiddenException>(
+                async () => await upsController.CalcularUpsEscolaAsync(
+                    new Escola { Latitude = 15.3, Longitude = 1.0 },
+                    double.PositiveInfinity
                 ));
         }
 
