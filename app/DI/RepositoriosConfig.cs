@@ -1,5 +1,5 @@
-﻿using repositorio;
-using repositorio.Interfaces;
+﻿using Repositorio;
+using Repositorio.Interfaces;
 
 namespace app.DI
 {
@@ -7,7 +7,6 @@ namespace app.DI
     {
         public static void AddConfigRepositorios(this IServiceCollection services)
         {
-            services.AddScoped<IUpsRepositorio, UpsRepositorio>();
             services.AddScoped<IRodoviaRepositorio, RodoviaRepositorio>();
             services.AddScoped<ISinistroRepositorio, SinistroRepositorio>();
         }

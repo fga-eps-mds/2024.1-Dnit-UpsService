@@ -1,41 +1,43 @@
-﻿using dominio;
+using app.Services;
+using Microsoft.AspNetCore.Authorization;
+using Entidades;
 using Microsoft.AspNetCore.Mvc;
-using repositorio.Interfaces;
-using service.Interfaces;
+using Service.Interfaces;
+using api;
 
 namespace app.Controllers
 {
     [ApiController]
     [Route("api")]
-    public class UpsController : ControllerBase
+    public class UpsController : AppController
     {
         private readonly IUpsService upsService;
+        private readonly AuthService authService;
 
-        public UpsController(IUpsService upsService)
+        public UpsController(IUpsService upsService, AuthService authService)
         {
             this.upsService = upsService;
-        }
-
-        [HttpGet("obter/sinistros")]
-        public IActionResult ObterUps()
-        {
-            IEnumerable<Sinistro> sinistros = upsService.ObterSinistros();
-
-            return new OkObjectResult(sinistros);
+            this.authService = authService;
         }
 
         [HttpPost("calcular/ups/sinistros")]
-        public IActionResult CalcularUpsSinistros()
+        [Authorize]
+        public async Task<IActionResult> CalcularUpsSinistrosAsync()
         {
-            upsService.CalcularUpsEmMassa();
-
+            authService.Require(Usuario, Permissao.UpsCalcularSinistro);
+            await upsService.CalcularUpsEmMassaAsync();
             return Ok();
         }
 
         [HttpGet("calcular/ups/escola")]
-        public IActionResult CalcularUpsEscola([FromQuery] Escola escola)
+        [Authorize]
+        public async Task<IActionResult> CalcularUpsEscolaAsync([FromQuery] Escola escola, [FromQuery] double? raioKm)
         {
-            UpsDetalhado upsDetalhado = upsService.CalcularUpsEscola(escola);
+            authService.Require(Usuario, Permissao.UpsCalcularEscola);
+            double raio = 2.0;
+            if (raioKm != null)
+                raio = (double) raioKm;
+            var upsDetalhado = await upsService.CalcularUpsEscolaAsync(escola, raio);
             return new OkObjectResult(upsDetalhado);
         }
     }

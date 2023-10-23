@@ -1,0 +1,3 @@
+AnoApuracao,SiglaUF,NumeroRodovia,TipoTrecho,CodigoSNV,LocalInicioFim,KmInicial,KmFinal,Extensao,Superficie,FederalCoincidente,EstadualCoincidente,SuperficieEstadual,MP082,ConcessaoConvenio
+2022,DF,1,Tipo1,Codigo1,Local1,1,1,1,Superficie1,FederalConstituinte1,EstadualContituinte1,SuperficieEstadual1,NAO,Concessao1
+2022,BA,2,Tipo2,Codigo2,Local2,2,2,2,Superficie2,FederalConstituinte2,EstadualContituinte2,SuperficieEstadual2,NAO,Concessao2

@@ -1,33 +1,37 @@
-using dominio;
-using Microsoft.AspNetCore.Http;
+using api;
+using app.Services;
 using Microsoft.AspNetCore.Mvc;
-using service;
-using service.Interfaces;
-using System;
-using System.IO;
+using Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace app.Controllers
 {
     [ApiController]
     [Route("api/rodovia")]
-    public class RodoviaController : ControllerBase
+    public class RodoviaController : AppController
     {
         private readonly IRodoviaService rodoviaService;
-
-        public RodoviaController(IRodoviaService rodoviaService)
+        private readonly AuthService authService;
+        
+        public RodoviaController(IRodoviaService rodoviaService, AuthService authService)
         {
             this.rodoviaService = rodoviaService;
+            this.authService = authService;
         }
-
+        
         [Consumes("multipart/form-data")]
         [HttpPost("cadastrarRodoviaPlanilha")]
-        public async Task<IActionResult> EnviarPlanilha(IFormFile arquivo)
+        [Authorize]
+        public async Task<IActionResult> EnviarPlanilhaAsync(IFormFile arquivo)
         {
+            authService.Require(Usuario, Permissao.RodoviaCadastrar);
             try
             {
                 if (arquivo == null || arquivo.Length == 0)
-                    return BadRequest("Nenhum arquivo enviado.");
+                    throw new ApiException(ErrorCodes.ArquivoVazio);
 
+                if (arquivo.ContentType.ToLower() != "text/csv")
+                    throw new ApiException(ErrorCodes.ArquivoFormatoInvalido, "Formato deve CSV");
 
                 using (var memoryStream = new MemoryStream())
                 {
@@ -35,9 +39,7 @@ namespace app.Controllers
                     memoryStream.Seek(0, SeekOrigin.Begin);
 
                     if (rodoviaService.SuperaTamanhoMaximo(memoryStream))
-                    {
-                        return StatusCode(406, "Tamanho máximo de arquivo ultrapassado!");
-                    }
+                        throw new ApiException(ErrorCodes.TamanhoArquivoExcedido);
                 }
 
                 using (var memoryStream = new MemoryStream())
@@ -49,11 +51,14 @@ namespace app.Controllers
 
                 return Ok();
             }
+            catch (ApiException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Arquivo incompatível");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Arquivo incompatÃ­vel");
             }
         }
-
     }
 }

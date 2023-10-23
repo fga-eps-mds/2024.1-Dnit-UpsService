@@ -31,7 +31,7 @@ Basta instalar a IDE [Visual Studio](https://visualstudio.microsoft.com/pt-br/fr
 
 #### Linux
 
-Instale o SDK do *.*NET .
+Instale o SDK do .NET.
 
 ```bash
 sudo apt-get update && \
@@ -45,16 +45,19 @@ sudo apt-get update && \
   sudo apt-get install -y aspnetcore-runtime-6.0
 ```
 
-Entre na pasta do serviço. Dentro da pasta "app" rode o comando:
+Entre na pasta do serviço. Entre em `app/` e inicie a aplicação:
 
 ```bash
+cd app/
 dotnet run
 ```
+
+Consulte a documentação da API em http://localhost:7085/swagger/.
+
 ### Clonar Aplicação
 
 Para clonar o repostório, basta utilizar o comando abaixo:
 
-##### UpsService
 ```
 git clone https://github.com/fga-eps-mds/2023.1-Dnit-UpsService.git
 ```
