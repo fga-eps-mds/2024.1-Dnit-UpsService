@@ -76,4 +76,19 @@ namespace api
         [Description("Dados já inseridos")]
         DadosJaInseridos,
     }
+    
+    public enum Permissao
+    {
+        [Description("Calcular UPS de sinistros")]
+        UpsCalcularSinistro = 5000,
+        [Description("Caluclar UPS de escolas")]
+        UpsCalcularEscola = 5001,
+    
+        [Description("Cadastrar rodovia")]
+        RodoviaCadastrar = 6000,
+    
+        [Description("Cadastrar sinistro")]
+        SinistroCadastrar = 7000,
+    }
+
 }

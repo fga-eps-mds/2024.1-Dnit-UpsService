@@ -1,15 +1,15 @@
 using app.Controllers;
 using app.Entidades;
+using auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stub;
 using test.Fixtures;
 using Xunit.Abstractions;
-using Xunit.Microsoft.DependencyInjection.Abstracts;
 
 namespace test
 {
-    public class RodoviaControllerTest : TestBed<Base>
+    public class RodoviaControllerTest : AuthTest
     {
         readonly AppDbContext db;
         readonly RodoviaController rodoviaController;
@@ -20,6 +20,8 @@ namespace test
         {
             db = fixture.GetService<AppDbContext>(testOutputHelper)!;
             rodoviaController = fixture.GetService<RodoviaController>(testOutputHelper)!;
+
+            AutenticarUsuario(rodoviaController);
         }
 
         [Fact]
@@ -37,6 +39,20 @@ namespace test
 
             Assert.IsType<BadRequestObjectResult>(resultado);
             Assert.Equal("Formato deve CSV", message);
+        }
+
+        [Fact]
+        public async Task EnviarPlanilhaAsync_QuandoNaoTiverPermissao_DeveBloquear()
+        {
+            var caminhoArquivo = Path.Join(caminhoStub, "ExemploSin.csv");
+            var conteudo = File.ReadAllBytes(caminhoArquivo);
+            var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoArquivo));
+            var arquivo = new FormFile(memoryStream, 0, conteudo.Length, "planilha", "");
+            arquivo.Headers = new HeaderDictionary();
+            arquivo.Headers.ContentType = "application/json";
+
+            AutenticarUsuario(rodoviaController, permissoes: new());
+            await Assert.ThrowsAsync<AuthForbiddenException>(async () => await rodoviaController.EnviarPlanilhaAsync(arquivo));
         }
 
         [Fact]

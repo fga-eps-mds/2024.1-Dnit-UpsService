@@ -1,4 +1,5 @@
-﻿using app.Entidades;
+﻿using auth;
+using app.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Service;
 using Service.Interfaces;
@@ -16,6 +17,8 @@ namespace app.DI
             services.AddScoped<IRodoviaService, RodoviaService>();
 
             services.AddControllers(o => o.Filters.Add(typeof(HandleExceptionFilter)));
+
+            services.AddAuth(configuration);
         }
     }
 }

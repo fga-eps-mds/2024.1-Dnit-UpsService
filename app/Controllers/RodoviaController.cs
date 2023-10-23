@@ -2,24 +2,29 @@ using api;
 using app.Services;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace app.Controllers
 {
     [ApiController]
     [Route("api/rodovia")]
-    public class RodoviaController : ControllerBase
+    public class RodoviaController : AppController
     {
         private readonly IRodoviaService rodoviaService;
-
-        public RodoviaController(IRodoviaService rodoviaService)
+        private readonly AuthService authService;
+        
+        public RodoviaController(IRodoviaService rodoviaService, AuthService authService)
         {
             this.rodoviaService = rodoviaService;
+            this.authService = authService;
         }
-
+        
         [Consumes("multipart/form-data")]
         [HttpPost("cadastrarRodoviaPlanilha")]
+        [Authorize]
         public async Task<IActionResult> EnviarPlanilhaAsync(IFormFile arquivo)
         {
+            authService.Require(Usuario, Permissao.RodoviaCadastrar);
             try
             {
                 if (arquivo == null || arquivo.Length == 0)
@@ -52,7 +57,7 @@ namespace app.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Arquivo incompat�vel");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Arquivo incompatível");
             }
         }
     }
