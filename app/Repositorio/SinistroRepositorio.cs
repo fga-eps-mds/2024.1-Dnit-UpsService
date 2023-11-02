@@ -45,6 +45,7 @@ namespace Repositorio
         {
             var total = await db.Sinistros.CountAsync();
             var sinistros = await db.Sinistros
+                .OrderBy(s => s.Id)
                 .Skip(filtro.ItemsPorPagina * (filtro.Pagina - 1))
                 .Take(filtro.ItemsPorPagina)
                 .ToListAsync();

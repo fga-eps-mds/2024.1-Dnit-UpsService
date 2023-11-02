@@ -2,6 +2,7 @@ using app.DI;
 using app.Entidades;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +50,9 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 //app.UseHttpsRedirection();
+// Vai ser deprecado
+app.UseHangfireServer();
+app.UseHangfireDashboard();
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -64,3 +68,15 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+
+BackgroundJob.Enqueue(() => Console.WriteLine("Hello world!"));
+BackgroundJob.Enqueue(() => Console.WriteLine("Hello world!"));
+
+using (var server = new BackgroundJobServer()) {
+    Console.ReadLine();
+}
+
+
+/*
+UseHangfireServer is obsolete AddHangfireServer extension method instead in the ConfigureServices method
+*/

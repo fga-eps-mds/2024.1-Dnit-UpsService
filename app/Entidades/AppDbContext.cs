@@ -10,5 +10,11 @@ namespace app.Entidades
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // base.OnConfiguring(optionsBuilder);
+            optionsBuilder.LogTo(Console.WriteLine, LogLevel.None);
+        }
     }
 }

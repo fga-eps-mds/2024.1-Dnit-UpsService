@@ -1,6 +1,8 @@
-﻿using api.Escolas;
+﻿using api;
+using api.Escolas;
 using app.Entidades;
 using Entidades;
+using Hangfire;
 using Repositorio.Interfaces;
 using Service.Interfaces;
 
@@ -18,13 +20,43 @@ namespace Service
             this.db = db;
         }
 
-        public async Task CalcularUpsEmMassaAsync()
+        public async Task CalcularUpsEmMassaAsyncAntigo()
         {
             var sinistros = await sinistroRepositorio.ObterTodosAsync();
             foreach (var sinistro in sinistros)
             {
                 sinistro.CalcularUps();
             }
+            await db.SaveChangesAsync();
+        }
+
+        // https://learn.microsoft.com/en-us/ef/core/querying/how-query-works
+        // https://stackoverflow.com/questions/16946207/does-foreach-cause-repeated-linq-execution
+        public async Task CalcularUpsEmMassaAsync()
+        {
+            var filtro = new PesquisaSinistroFiltro
+            {
+                Pagina = 1,
+                ItemsPorPagina = 5000
+            };
+            var itemsProcessados = 0;
+            var totalItems = db.Sinistros.Count();
+            var totalPaginas = Math.Ceiling((float)totalItems / filtro.ItemsPorPagina) + 1;
+            do
+            {
+                BackgroundJob.Enqueue(() => CalcularUpsDeUmaListaDeSinistros(filtro));
+                filtro.Pagina++;
+                itemsProcessados += filtro.ItemsPorPagina;
+            } while (filtro.Pagina != totalPaginas);
+            Console.WriteLine(">>> Items processados: " + itemsProcessados);
+            Console.WriteLine(">>> Paginas          : " + filtro.Pagina);
+        }
+
+        public async Task CalcularUpsDeUmaListaDeSinistros(PesquisaSinistroFiltro filtro)
+        {
+            var lista = await sinistroRepositorio.ListarPaginadaAsync(filtro);
+            foreach (var sinistro in lista.Items!)
+                sinistro.CalcularUps();
             await db.SaveChangesAsync();
         }
 
@@ -48,10 +80,12 @@ namespace Service
             {
                 if (CalcularDistancia(sinistro.Latitude, sinistro.Longitude, escola.Latitude, escola.Longitude) <= raioKm)
                 {
-                    if (upsPorAno.ContainsKey(sinistro.Data.Year)) {
+                    if (upsPorAno.ContainsKey(sinistro.Data.Year))
+                    {
                         upsPorAno[sinistro.Data.Year] += sinistro.Ups ?? 0;
                     }
-                    else {
+                    else
+                    {
                         upsPorAno.Add(sinistro.Data.Year, sinistro.Ups ?? 0);
                     }
                 }
