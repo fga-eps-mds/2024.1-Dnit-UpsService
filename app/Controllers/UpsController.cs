@@ -40,5 +40,14 @@ namespace app.Controllers
             var upsDetalhado = await upsService.CalcularUpsEscolaAsync(escola, raio);
             return new OkObjectResult(upsDetalhado);
         }
+
+        [Authorize]
+        [HttpPost("calcular/ups/escolas")]
+        public async Task<IActionResult> CalcularUpsEscolasAsync([FromBody] Escola[] escolas, [FromQuery] uint desde = 2015, [FromQuery] double raioKm = 2.0)
+        {
+            // authService.Require(Usuario, Permissao.UpsCalcularEscola);
+            var upss = await upsService.CalcularUpsMuitasEscolasAsync(escolas, desde, raioKm);
+            return new OkObjectResult(upss);
+        }
     }
 }

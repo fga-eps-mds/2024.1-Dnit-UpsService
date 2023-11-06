@@ -1,5 +1,4 @@
-﻿using api;
-using api.Escolas;
+﻿using api.Escolas;
 using app.Entidades;
 using Entidades;
 using Hangfire;
@@ -48,7 +47,7 @@ namespace Service
                 filtro.Pagina++;
                 itemsProcessados += filtro.ItemsPorPagina;
             } while (filtro.Pagina != totalPaginas);
-            Console.WriteLine(">>> Items processados: " + itemsProcessados);
+            Console.WriteLine(">>> Items processados: " + itemsProcessados); // mais ou menos isso
             Console.WriteLine(">>> Paginas          : " + filtro.Pagina);
         }
 
@@ -99,6 +98,22 @@ namespace Service
 
             upsDetalhado.CalcularUpsGeral();
             return upsDetalhado;
+        }
+
+        public async Task<int[]> CalcularUpsMuitasEscolasAsync(Escola[] escolas, uint desde, double raioKm)
+        {
+            // Qual o limite de escolas pode ser pedido?
+            // Qual o limite de sinistros que podem ter ao redor de uma escola?
+            var upss = new int[escolas.Length];
+            for (int i = 0; i < escolas.Length; i++)
+            {
+                var sinistros = await sinistroRepositorio.ObterAPartirDoAnoDentroDeRaioAsync(escolas[i], raioKm, desde);
+                upss[i] = 0; // precisa?
+                foreach (var s in sinistros)
+                    upss[i] += s.Ups ?? 0;
+            }
+
+            return upss;
         }
 
         public static double ConverterParaRadianos(double grau)
