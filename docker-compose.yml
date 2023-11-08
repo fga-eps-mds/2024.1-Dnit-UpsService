@@ -15,6 +15,9 @@ services:
       - ./test:/app/test
     networks:
       - dnit-network
+    environment:
+      - MODE=container
+
 
   dnit-ups-db:
     container_name: dnit-ups-db
@@ -24,7 +27,7 @@ services:
       POSTGRES_DB: upsservice
       POSTGRES_PASSWORD: 1234
     ports:
-      - "5431:5432"
+      - "5333:5432"
     networks:
       - dnit-network
     volumes:
