@@ -1,7 +1,7 @@
 ﻿using api.Escolas;
+using api.Ups;
 using app.Entidades;
 using Entidades;
-using Hangfire;
 using Repositorio.Interfaces;
 using Service.Interfaces;
 
@@ -29,8 +29,6 @@ namespace Service
             await db.SaveChangesAsync();
         }
 
-        // https://learn.microsoft.com/en-us/ef/core/querying/how-query-works
-        // https://stackoverflow.com/questions/16946207/does-foreach-cause-repeated-linq-execution
         public async Task CalcularUpsEmMassaAsync()
         {
             var filtro = new PesquisaSinistroFiltro
@@ -43,12 +41,10 @@ namespace Service
             var totalPaginas = Math.Ceiling((float)totalItems / filtro.ItemsPorPagina) + 1;
             do
             {
-                BackgroundJob.Enqueue(() => CalcularUpsDeUmaListaDeSinistros(filtro));
+                // BackgroundJob.Enqueue(() => CalcularUpsDeUmaListaDeSinistros(filtro));
                 filtro.Pagina++;
                 itemsProcessados += filtro.ItemsPorPagina;
             } while (filtro.Pagina != totalPaginas);
-            Console.WriteLine(">>> Items processados: " + itemsProcessados); // mais ou menos isso
-            Console.WriteLine(">>> Paginas          : " + filtro.Pagina);
         }
 
         public async Task CalcularUpsDeUmaListaDeSinistros(PesquisaSinistroFiltro filtro)
@@ -63,8 +59,6 @@ namespace Service
         {
             var sinistros = await sinistroRepositorio.ObterTodosAsync();
             var upsDetalhado = new UpsDetalhado();
-
-            // double raio = 2.0; //raio esta em quilometro
 
             Dictionary<int, int> upsPorAno = new()
             {
@@ -100,22 +94,6 @@ namespace Service
             return upsDetalhado;
         }
 
-        public async Task<int[]> CalcularUpsMuitasEscolasAsync(Escola[] escolas, uint desde, double raioKm)
-        {
-            // Qual o limite de escolas pode ser pedido?
-            // Qual o limite de sinistros que podem ter ao redor de uma escola?
-            var upss = new int[escolas.Length];
-            for (int i = 0; i < escolas.Length; i++)
-            {
-                var sinistros = await sinistroRepositorio.ObterAPartirDoAnoDentroDeRaioAsync(escolas[i], raioKm, desde);
-                upss[i] = 0; // precisa?
-                foreach (var s in sinistros)
-                    upss[i] += s.Ups ?? 0;
-            }
-
-            return upss;
-        }
-
         public static double ConverterParaRadianos(double grau)
         {
             return grau * Math.PI / 180.0;
@@ -135,6 +113,35 @@ namespace Service
             var distance = raioTerraEmKm * resultadoFormula;
 
             return distance;
+        }
+
+        public async Task<int[]> CalcularUpsMuitasEscolasAsync(Escola[] escolas, CalcularUpsEscolasFiltro filtro)
+        {
+            // Qual o limite de escolas pode ser pedido? 100?
+            // Qual o máximo de sinistros que podem ter ao redor de uma escola? Pq todos eles são trazidos em memória
+            // A query em ObterAPartirDoAnoDentroDeRaioAsync é executada escolas.Length vezes. Isso pode dar ruim
+            
+            uint limite = (uint) DateTime.Now.AddYears(-5).Year;
+            uint ano;
+            if (filtro.DesdeAno == null)
+                    ano = limite;
+            else
+                if (filtro.DesdeAno <= limite || filtro.DesdeAno < 0)
+                    ano = limite;
+                else
+                    ano = (uint) filtro.DesdeAno;
+
+            double raioKm = filtro.RaioKm ?? 2;
+            var upss = new int[escolas.Length];
+            for (int i = 0; i < escolas.Length; i++)
+            {
+                var sinistros = await sinistroRepositorio
+                    .ObterAPartirDoAnoDentroDeRaioAsync(escolas[i], raioKm, ano);
+                foreach (var s in sinistros)
+                    upss[i] += s.Ups ?? 0;
+            }
+
+            return upss;
         }
     }
 }

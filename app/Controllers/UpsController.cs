@@ -4,6 +4,7 @@ using Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
 using api;
+using api.Ups;
 
 namespace app.Controllers
 {
@@ -43,11 +44,11 @@ namespace app.Controllers
 
         [Authorize]
         [HttpPost("calcular/ups/escolas")]
-        public async Task<IActionResult> CalcularUpsEscolasAsync([FromBody] Escola[] escolas, [FromQuery] uint desde = 2015, [FromQuery] double raioKm = 2.0)
+        public async Task<int[]> CalcularUpsEscolasAsync([FromBody] Escola[] escolas, [FromQuery] CalcularUpsEscolasFiltro filtro)
         {
             // authService.Require(Usuario, Permissao.UpsCalcularEscola);
-            var upss = await upsService.CalcularUpsMuitasEscolasAsync(escolas, desde, raioKm);
-            return new OkObjectResult(upss);
+            var upss = await upsService.CalcularUpsMuitasEscolasAsync(escolas, filtro);
+            return upss;
         }
     }
 }

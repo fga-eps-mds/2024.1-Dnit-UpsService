@@ -1,10 +1,8 @@
-using auth;
+﻿using auth;
 using app.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Service;
 using Service.Interfaces;
-using Hangfire;
-using Hangfire.PostgreSql;
 
 namespace app.DI
 {
@@ -23,17 +21,6 @@ namespace app.DI
             services.AddControllers(o => o.Filters.Add(typeof(HandleExceptionFilter)));
 
             services.AddAuth(configuration);
-
-            services.AddHangfire(config => config
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UsePostgreSqlStorage(c => 
-                    c.UseNpgsqlConnection(configuration.GetConnectionString("Hangfire")))
-            );
-            services.AddHangfireServer();
-            // precisa mesmo ou é só um exemplo???
-            // services.AddMvc();
         }
     }
 }
