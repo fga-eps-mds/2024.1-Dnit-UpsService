@@ -6,7 +6,7 @@ WORKDIR=$(pwd)
 python3 -m venv .venv
 source $WORKDIR/.venv/bin/activate
 
-pip install dnit_updater
+pip install dnit_updater --upgrade
 pip install uvicorn
 
 cat > /etc/systemd/system/dnit-deploy.service <<EOF
