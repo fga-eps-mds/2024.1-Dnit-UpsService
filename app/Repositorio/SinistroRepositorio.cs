@@ -58,12 +58,12 @@ namespace Repositorio
             return sinistros;
         }
 
-        public async Task<IEnumerable<Sinistro>> ObterAPartirDoAnoDentroDeRaioAsync(Escola escola, double raioKm, uint ano)
+        public async Task<List<Sinistro>> ObterAPartirDoAnoDentroDeRaioAsync(Escola escola, double raioKm, uint ano)
         {
             var query = from s in db.Sinistros
-                where s.DataUtc.Year >= ano
-                where db.CalcularDistancia(s.Latitude, s.Longitude, escola.Latitude, escola.Longitude) <= raioKm
-                select s;
+                        where s.DataUtc.Year >= ano
+                        where db.CalcularDistancia(s.Latitude, s.Longitude, escola.Latitude, escola.Longitude) <= raioKm
+                        select s;
             return await query.ToListAsync();
         }
     }

@@ -42,6 +42,7 @@ namespace Service
             do
             {
                 // BackgroundJob.Enqueue(() => CalcularUpsDeUmaListaDeSinistros(filtro));
+                await CalcularUpsDeUmaListaDeSinistros(filtro);
                 filtro.Pagina++;
                 itemsProcessados += filtro.ItemsPorPagina;
             } while (filtro.Pagina != totalPaginas);
@@ -119,20 +120,21 @@ namespace Service
         {
             // Qual o limite de escolas pode ser pedido? 100?
             // Qual o máximo de sinistros que podem ter ao redor de uma escola? Pq todos eles são trazidos em memória
-            // A query em ObterAPartirDoAnoDentroDeRaioAsync é executada escolas.Length vezes. Isso pode dar ruim
-            
-            uint limite = (uint) DateTime.Now.AddYears(-5).Year;
+            // A query em ObterAPartirDoAnoDentroDeRaioAsync é executada escolas.Length vezes. Isso pode dar ruim.
+
+            uint limite = (uint)DateTime.Now.AddYears(-5).Year;
             uint ano;
             if (filtro.DesdeAno == null)
-                    ano = limite;
+                ano = limite;
             else
                 if (filtro.DesdeAno <= limite || filtro.DesdeAno < 0)
-                    ano = limite;
-                else
-                    ano = (uint) filtro.DesdeAno;
+                ano = limite;
+            else
+                ano = (uint)filtro.DesdeAno;
 
             double raioKm = filtro.RaioKm ?? 2;
             var upss = new int[escolas.Length];
+
             for (int i = 0; i < escolas.Length; i++)
             {
                 var sinistros = await sinistroRepositorio
