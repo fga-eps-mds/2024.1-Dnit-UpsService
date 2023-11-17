@@ -46,7 +46,7 @@ namespace app.Controllers
         [HttpPost("calcular/ups/escolas")]
         public async Task<int[]> CalcularUpsEscolasAsync([FromBody] Escola[] escolas, [FromQuery] CalcularUpsEscolasFiltro filtro)
         {
-            // authService.Require(Usuario, Permissao.UpsCalcularEscola);
+            authService.Require(Usuario, Permissao.UpsCalcularEscola);
             var upss = await upsService.CalcularUpsMuitasEscolasAsync(escolas, filtro);
             return upss;
         }
