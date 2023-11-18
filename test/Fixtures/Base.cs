@@ -11,6 +11,8 @@ using app.Controllers;
 using Service.Interfaces;
 using Service;
 using auth;
+using app.DI;
+using test.Mock;
 
 namespace test.Fixtures
 {
@@ -29,6 +31,12 @@ namespace test.Fixtures
             services.AddScoped<ISinistroService, SinistroService>();
             services.AddScoped<IUpsService, UpsService>();
             services.AddScoped<IRodoviaService, RodoviaService>();
+            
+            services.AddScoped<IEscolaService, EscolaServiceMock>();
+
+            services.Configure<EscolaServiceConfig>(configuration.GetSection("EscolaServiceConfig"));
+
+            // services.AddHttpClient<IEscolaService EscolaServiceMock>();
 
             services.AddScoped<SinistroController>();
             services.AddScoped<RodoviaController>();
