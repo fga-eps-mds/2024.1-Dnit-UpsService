@@ -52,7 +52,7 @@ namespace test
         }
 
         [Fact]
-        public async void CalcularUpsMuitasEscolasAsync_QuandoNormal_SomaUpsDeTodosSinistrosAoRedor()
+        public async Task CalcularUpsMuitasEscolasAsync_QuandoNormal_SomaUpsDeTodosSinistrosAoRedor()
         {
             var escolas = GeraEscolas(1, lat: 1.3, lon: 1.2);
 
@@ -71,7 +71,7 @@ namespace test
         }
 
         [Fact]
-        public async void CalcularUpsMuitasEscolasAsync_QuandoPassadoAnoMuitoAntigo_AnoAtualMenos5EhUsadoComoFiltro()
+        public async Task CalcularUpsMuitasEscolasAsync_QuandoPassadoAnoMuitoAntigo_AnoAtualMenos5EhUsadoComoFiltro()
         {
             var escolas = GeraEscolas(1, lat: 1.3, lon: 1.2);
 
@@ -92,7 +92,7 @@ namespace test
         }
 
         [Fact]
-        public async void CalcularUpsMuitasEscolasAsync_QuandoRaioNaoFornecido_2UsadoComoPadrao()
+        public async Task CalcularUpsMuitasEscolasAsync_QuandoRaioNaoFornecido_2UsadoComoPadrao()
         {
             var escolas = GeraEscolas(1, lat: 1.3, lon: 1.2);
             var dataMuitoAntiga = DateTime.Now.AddYears(-8);

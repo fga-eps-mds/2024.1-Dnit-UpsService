@@ -51,7 +51,7 @@ namespace test.SinistroServiceTests
         }
 
         [Fact]
-        public async void CadastrarSinistroViaPlanilha_QuandForChamado_DeveCadastrarSinistros()
+        public async Task CadastrarSinistroViaPlanilha_QuandForChamado_DeveCadastrarSinistros()
         {
             var memoryStream = new MemoryStream(File.ReadAllBytes(caminhoDoArquivo));
 
