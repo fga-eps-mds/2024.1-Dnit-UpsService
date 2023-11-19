@@ -31,18 +31,18 @@ namespace test.Fixtures
             services.AddScoped<ISinistroService, SinistroService>();
             services.AddScoped<IUpsService, UpsService>();
             services.AddScoped<IRodoviaService, RodoviaService>();
-            
+
             services.AddScoped<IEscolaService, EscolaServiceMock>();
 
-            services.Configure<EscolaServiceConfig>(configuration.GetSection("EscolaServiceConfig"));
+            // services.Configure<EscolaServiceConfig>(configuration!.GetSection("EscolaServiceConfig"));
 
-            // services.AddHttpClient<IEscolaService EscolaServiceMock>();
+            services.AddHttpClient<IEscolaService, EscolaServiceMock>();
 
             services.AddScoped<SinistroController>();
             services.AddScoped<RodoviaController>();
             services.AddScoped<UpsController>();
 
-            services.AddAuth(configuration);
+            services.AddAuth(configuration!);
         }
 
         protected override ValueTask DisposeAsyncCore() => new();
