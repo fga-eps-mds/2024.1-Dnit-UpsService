@@ -34,8 +34,6 @@ namespace test.Fixtures
 
             services.AddScoped<IEscolaService, EscolaServiceFake>();
 
-            // services.Configure<EscolaServiceConfig>(configuration!.GetSection("EscolaServiceConfig"));
-
             services.AddHttpClient<IEscolaService, EscolaServiceFake>();
 
             services.AddScoped<SinistroController>();
