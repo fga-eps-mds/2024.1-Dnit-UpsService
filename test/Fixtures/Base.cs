@@ -32,11 +32,11 @@ namespace test.Fixtures
             services.AddScoped<IUpsService, UpsService>();
             services.AddScoped<IRodoviaService, RodoviaService>();
 
-            services.AddScoped<IEscolaService, EscolaServiceMock>();
+            services.AddScoped<IEscolaService, EscolaServiceFake>();
 
             // services.Configure<EscolaServiceConfig>(configuration!.GetSection("EscolaServiceConfig"));
 
-            services.AddHttpClient<IEscolaService, EscolaServiceMock>();
+            services.AddHttpClient<IEscolaService, EscolaServiceFake>();
 
             services.AddScoped<SinistroController>();
             services.AddScoped<RodoviaController>();

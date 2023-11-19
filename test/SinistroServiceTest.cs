@@ -4,8 +4,7 @@ using Repositorio.Interfaces;
 using app.Entidades;
 using Microsoft.EntityFrameworkCore;
 using api;
-using Microsoft.Extensions.Options;
-using app.DI;
+using Service.Interfaces;
 
 namespace test.SinistroServiceTests
 {
@@ -15,29 +14,27 @@ namespace test.SinistroServiceTests
         private readonly Mock<AppDbContext> mockDb;
         private readonly SinistroService sinistroService;
         private readonly Mock<ISinistroRepositorio> mockSinistroRepositorio;
-        private readonly Mock<EscolaService> mockEscolaService;
+        private readonly Mock<IEscolaService> mockEscolaService;
         private readonly string caminhoTests = Path.Join("..", "..", "..", "..", "test");
         private string caminhoDoArquivo;
 
         public SinistroServiceTest()
         {
             mockSinistroRepositorio = new();
-            var escolaServiceConfig = new EscolaServiceConfig { Host = "http://localhost" };
-            mockEscolaService = new(new HttpClient(), Options.Create(escolaServiceConfig));
+            mockEscolaService = new();
             mockDb = new(options);
-            
+
             sinistroService = new SinistroService(
                 mockDb.Object,
                 mockSinistroRepositorio.Object,
-                mockEscolaService.Object
-            );
+                mockEscolaService.Object);
             caminhoDoArquivo = Path.Join(caminhoTests, "Stub", "ExemploSin.csv");
         }
 
         [Fact]
         public async Task CadastrarSinistroViaPlanilha_QuandoPlanilhaForPassadaENaoTiverDado_NaoDevePassarPeloRepositorio()
         {
-            await Assert.ThrowsAsync<ArgumentNullException>(async () 
+            await Assert.ThrowsAsync<ArgumentNullException>(async ()
                 => await sinistroService.CadastrarSinistroViaPlanilha(null));
         }
 
