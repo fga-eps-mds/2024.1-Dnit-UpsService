@@ -71,7 +71,7 @@ namespace test
         }
 
         [Fact]
-        public async Task CalcularUpsMuitasEscolasAsync_QuandoPassadoAnoMuitoAntigo_AnoAtualMenos5EhUsadoComoFiltro()
+        public async Task CalcularUpsMuitasEscolasAsync_QuandoPassadoAnoMuitoAntigo_UsaAnoAtualMenos5EhUsadoComoFiltro()
         {
             var escolas = GeraEscolas(1, lat: 1.3, lon: 1.2);
 
