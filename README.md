@@ -1,7 +1,7 @@
 # UpsService
 
-Serviço responsável pelas funcionalidades relacionadas ao cáculo de ranque, 
-configuração de prioridades, gerência de escola, polos e etc.
+Serviço responsável pelas funcionalidades relacionadas à 
+gerência de sinistros, de rodovias e cálculo de UPS de escolas.
 
 ## Pré requisitos
 
